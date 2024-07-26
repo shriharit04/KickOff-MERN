@@ -10,6 +10,8 @@ app.get('/', (req, res) => {
   res.send('Hello World!')
 })
 
+app.use('/uploads',express.static(__dirname+'/uploads')) // now we can get photos in uploads
+
 //middleware - convert response to json
 app.use(express.json())
 app.use(cors({
