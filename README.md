@@ -1,7 +1,6 @@
 I am trying to create an app thru which we can book turfs easily. also plannig to implement community football
 
 ## Future plan :
-- Extending to all sports
 - Create a rating system for player created teams.
 - Create a system for players to connect with each other and form teams.
 
@@ -20,10 +19,13 @@ I am trying to create an app thru which we can book turfs easily. also plannig t
 
 
 ## TODO:
-- [ ] Get contact no and contactMail and add to turf
+- [ ] update turf backend pending
+- [ ] update username profile
+- [ ] Get contact no and add to turf
 - [ ] alter routes. seperate lister and user routes
-- [ ] change name of file and add to database
 - [ ] design turf page.
+- [ ] add more photos to turf page
+- [ ] bring option to delete photos in form
 
 --------------------------------
 1. Create Booking system (simple alert)

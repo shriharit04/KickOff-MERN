@@ -3,15 +3,10 @@ import { UserContext } from '../contexts/UserContext'
 import { Link, Navigate, useParams } from 'react-router-dom'
 import axios from 'axios'
 import turfImg from '../assets/soccer-field-svgrepo-com.svg'
-import AccountNavbar from '../components/AccountNavbar'
-function AccountPage() {
+function AccountPage({activeClass}) {
   const {user,setUser,ready} = useContext(UserContext)
   const [redirect,setRedirect] = useState(null)
-  let {subpage} =  useParams()
-  if(!subpage){
-    subpage="profile"
-  }
-
+  
   
 
   if(!ready){
@@ -27,7 +22,7 @@ function AccountPage() {
 
   function linkClasses(type = null){
     let classes = 'py-2 px-2 inline-flex py-2 px-6 gap-2 items-center '
-    if(type===subpage){
+    if(type===activeClass){
       classes+= 'bg-secondary rounded-full'
     }else{
       classes += "bg-gray-800 rounded-full"
@@ -42,8 +37,6 @@ function AccountPage() {
 
   return (  
     <div>
-      <AccountNavbar/>
-
       account page for {user.name}
       <nav className='w-full flex justify-center mt-8 gap-4'>
         <Link className={linkClasses('profile')} to={'/account/profile'}>
@@ -56,7 +49,7 @@ function AccountPage() {
           </svg>
           My bookings
         </Link>
-        <Link className={linkClasses('turf')} to = {'/account/turf'}>
+        <Link className={linkClasses('myTurf')} to = {'/account/turf'}>
         <img src={turfImg} className="rotate-90" alt="" width="30px"/>My Turf</Link>
       </nav>
       

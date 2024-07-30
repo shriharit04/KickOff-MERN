@@ -1,6 +1,7 @@
 import axios from 'axios'
 import React, { useEffect, useState } from 'react'
 import { Link, useParams ,Navigate} from 'react-router-dom'
+import AccountNavbar from '../components/AccountNavbar'
 
 function MyTurf() {
 
@@ -89,6 +90,7 @@ function MyTurf() {
 
   return (
     <div>
+      <AccountNavbar activeClass={"myTurf"}/>
       <h1>Places Page</h1>
 
       {turfExists && !editable && (

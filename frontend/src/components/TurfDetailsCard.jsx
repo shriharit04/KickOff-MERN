@@ -7,14 +7,18 @@ function TurfDetailsCard({turf}) {
   const [hovered, setHovered] = useState(false);
 
   console.log(turf)
-  const { name, address, location, price, photo } = turf;
+  const { name, address, location, price, photos } = turf;
+  console.log(name)
   return (
-    <div className="max-w-sm rounded overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 bg-white m-4">
-      <img className="w-full" src={photo} alt={name} />
+    <div className="max-w-sm rounded overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 bg-white w-1/4">
+      {photos?.[0] && (
+      <img className="w-full" src={`http://localhost:4000/uploads/${photos[0]}`} alt={name} />
+
+      )}
       <div className="px-6 py-4">
-        <div className="font-bold text-xl mb-2 text-darkgreen">{name}</div>
+        <div className="font-bold text-xl mb-2 text-gray-900">{name}</div>
         <p className="text-gray-700 text-base">{address}</p>
-        <p className="text-gray-700 text-base">{location}</p>
+        {/* <p className="text-gray-700 text-base">{location}</p> */}
       </div>
       <div className="px-6 pt-4 pb-2">
        <Link to={`/view/turf/${turf._id}`}><span
