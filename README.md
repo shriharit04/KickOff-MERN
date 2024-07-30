@@ -20,7 +20,13 @@ I am trying to create an app thru which we can book turfs easily. also plannig t
 
 
 ## TODO:
+- [ ] Get contact no and contactMail and add to turf
 - [ ] alter routes. seperate lister and user routes
 - [ ] change name of file and add to database
 - [ ] design turf page.
+
+--------------------------------
+1. Create Booking system (simple alert)
+2. show busy slots
+3. send notification to mail and contactNO
 

@@ -4,51 +4,55 @@ const Schema = mongoose.Schema;
 const turfSchema = new Schema({
     lister_id: {
         type : mongoose.Schema.Types.ObjectId, ref:'User',
+        unique : true,
         required : true,
     },
     name: {
         type: String,
         required: true
     },
-    photos :{ //rough
-        // type : BinData,
-        type : [String],
-        required : true
+    address: {
+        type: String,
+        required: true,
+        unique : true
     },
     desc : {
         type : String,
         required : true,
     },
-    perks:{
+    photos :{ //rough
+        // type : BinData,
         type : [String],
-        required : true,
+        required : true
     },
+    price: {
+        type: Number,
+        required: true
+    },
+    // perks:{
+    //     type : [String],
+    //     // required : true,
+    // },
+    open : Number,
+    close : Number,
     maxPlayers: {
         type : Number,
         required : true,
     },
     contactNo:{
         type: Number,
-        required: true,
-        unique:true
+        // required: true,
+        // unique:true
     },
     contactMail :{
         type:String,
-        unique : true
+        // unique : true
     },
-    address: {
-        type: String,
-        required: true,
-        unique : true
-    },
-    price: {
-        type: Number,
-        required: true
-    },
+    
     geolocation : {
         type : String,
         // required : true,
-        unique : true
+        // unique : true
     },
     slotsBusy : {
         type : [[Date]]

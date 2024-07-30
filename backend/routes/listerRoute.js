@@ -2,7 +2,7 @@ const express = require('express')
 const router = express.Router()
 
 //  route-> lister/
-const {createNewTurf}  = require('../controllers/listerController')
+const {createNewTurf, getTurfByLister}  = require('../controllers/listerController')
 
 
 //add turf (post)
@@ -11,7 +11,8 @@ router.post('/turf/new',createNewTurf)
 // update turf (add)
 router.patch('/turf/update',()=>{})
 //view account data (get)
-router.get('/',()=>{})
+
+router.get('/hasTurf',getTurfByLister)
 
 
 

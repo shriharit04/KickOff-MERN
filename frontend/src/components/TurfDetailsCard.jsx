@@ -6,6 +6,7 @@ import { Link } from 'react-router-dom'
 function TurfDetailsCard({turf}) {
   const [hovered, setHovered] = useState(false);
 
+  console.log(turf)
   const { name, address, location, price, photo } = turf;
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 bg-white m-4">

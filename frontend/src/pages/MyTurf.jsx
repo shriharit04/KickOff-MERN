@@ -1,24 +1,30 @@
 import axios from 'axios'
-import React, { useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
+import React, { useEffect, useState } from 'react'
+import { Link, useParams ,Navigate} from 'react-router-dom'
 
 function MyTurf() {
 
   const {action} = useParams()
   console.log(action)
 
+
+  const [turfExists,setTurfExists] = useState(false)
+  const [editable,setEditable] = useState(false);
+
+
   const [name, setName] = useState('')
   const [address,setAddress] = useState('')
   const [desc, setDesc] = useState('')
   const [location, setLocation] = useState('') //future implementation
   const [addedPhotos, setAddedPhotos] = useState([])
-  const [price, setPrice] = useState(0) //future
+  const [price, setPrice] = useState('') //future
   const [photoLink,setPhotoLink] = useState('')
   
   const [open,setOpen] = useState('')
   const [close ,setClose] = useState('')
   const [size,setSize] = useState('')
 
+  const [redirectToProfile,setRedirectToProfile] = useState('')
   function uploadPhoto(ev){
     const files =ev.target.files
     const data = new FormData() 
@@ -35,26 +41,67 @@ function MyTurf() {
     })
   }
 
+  async function addNewTurf(ev){
+    ev.preventDefault();
+    const {data} = await axios.post('/lister/turf/new',{name,address,desc,addedPhotos,price,open,close,size});
+    console.log(data);
+
+    alert("New Turf added")
+  }
+
+  async function UpdateTurf(ev){
+    ev.preventDefault();
+    const {data} = await axios.put(`/lister/turf/update/${turfID}`,{name,address,desc,addedPhotos,price,open,close,size});
+    alert("Turf details updated")
+  }
+
+  useEffect(() => {
+    const fetchTurf = async () => {
+      try {
+        const response = await axios.get(`http://localhost:4000/lister/hasTurf/`); // Replace with actual endpoint and ID
+        if (response.status === 200 && response.data) {
+          let data= response.data;
+          setName(data.name)
+          setAddress(data.address)
+          setDesc(data.desc)
+          setLocation(data.location) //future implementation
+          setAddedPhotos(data.photos)
+          setPrice(data.price) 
+          // setPhotoLink(data)
+          setOpen(data.open)
+          setClose(data.close)
+          setSize(data.maxPlayers)
+          setTurfExists(true);
+        } else {
+          setTurfExists(false);
+        }
+      } catch (error) {
+        console.error('Error fetching turf:', error);
+        setTurfExists(false);
+      }
+    };
+
+    fetchTurf();
+  }, []);
+  
+
+ 
 
   return (
     <div>
       <h1>Places Page</h1>
-      <div className="text-center">
-        {action!=='new' && (
-          <Link className=" inline-flex  gap-1 bg-secondary text-white py-2 px-6 rounded-full" to="/account/turf/new"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="size-6">
-          <path strokeLinecap="round" strokeLinejoin="round" d="M12 4.5v15m7.5-7.5h-15" />
-      </svg>
-      Add new place
-      </Link>
-        )}
-        {/* {action ==='new' && ()} */}
 
-        <div>
-          <form className='p-4 w-3/4 mx-auto'>
+      {turfExists && !editable && (
+        <button onClick={() => setEditable(!editable)} className='flex primary w-6xl  m-auto p-8 primary' >Edit</button>)}
+      
+      
+      <div className="text-center">
+        <div className={!editable ? "pointer-events-none opacity-80" : ""}>
+          <form className='p-4 w-3/4 mx-auto' onSubmit={addNewTurf}>
             <h2 className='text-xl mt-4'>Turf Details</h2>
             <input type="text" value={name} onChange={e => setName(e.target.value)} placeholder='Turf Name' />
             <input type="text" value={address} onChange={e => setAddress(e.target.value)} placeholder='Address' />
-            <textarea className="w-full rounded-lg p-2 mt-2" placeholder='Description' value={desc} onChange={e => setDesc(e.target.value)}></textarea>
+            <textarea className="w-full rounded-lg text-black p-2 mt-2" placeholder='Description' value={desc} onChange={e => setDesc(e.target.value)}></textarea>
             
             <h2 className='text-xl mt-4'>Photos</h2>
             <div className="flex justify-around">
@@ -83,9 +130,10 @@ function MyTurf() {
               <input type="text" placeholder='Opens At (24hr)'  value={open} onChange={e => setOpen(e.target.value)}/>
               <input type="text" placeholder='Closes At (24hr)'  value={close} onChange={e => setClose(e.target.value)}/>
               <input type="text" placeholder='Turf Size (5v5, 7v7)' value={size} onChange={e => setSize(e.target.value)} />
+              <input type="text" placeholder='Turf Price(per hour)'  value={price} onChange={e => setPrice(e.target.value)}/>
             </div>
             
-            <button type='submit' className='primary w-full mt-2'>Save</button>
+            <button type='submit' className='primary w-full mt-2'>{turfExists ? "Update" : "Create"}</button>
 
           </form>
         </div>

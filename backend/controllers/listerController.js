@@ -1,34 +1,55 @@
 const Turf = require('../models/turfModel')
 const mongoose = require('mongoose')
+const User = require('../models/userModel')
+
 //add turf (post)
+const jwt = require('jsonwebtoken')
 const  createNewTurf = async (req,res) =>{
-    const {name,photos,address,price,geolocation,contactNo,contactMail} = req.body
+    const {name,address,desc,addedPhotos:photos,price,open,close,size:maxPlayers} = req.body
+    const {token} = req.cookies;
+    jwt.verify(token,process.env.SECRET,{}, async (err,userToken)=>{
+        if(err) throw err;
+        console.log(userToken)
+        const placeDoc = await Turf.create({
+            lister_id: userToken._id,
+            contactMail : userToken.email,
+            name,address,desc,photos,price,open,close,maxPlayers
 
-    let emptyFields = []
-    if(!name){
-        emptyFields.push("name")
-    }if(!photos){
-        emptyFields.push("photos")
-    }if(!address){contactNo
-        emptyFields.push("address")
-    }if(!price){
-        emptyFields.push("price")
-    }if(!geolocation){
-        emptyFields.push("geolocation")
-    }if(!contactNo){
-        emptyFields.push("contactNo")
-    }
-    if(emptyFields.length>0){
-        return res.status(400).json({error: "Please fill in all the fields" , emptyFields})
-    }
-    try {
-        const turf = await Turf.create({name,photos,address,price,geolocation,contactNo,contactMail})
-        res.status(200).json(turf)
-
-    } catch (error) {
-        res.status(400).json({error:error.message})
-    }
+        })
+        res.json(placeDoc);
+        // res.json({userToken})
+    })
 }
+
+const getTurfByLister = async (req, res) => {
+    
+    //get id from token
+    const{token} = req.cookies
+    if(token){
+        jwt.verify(token,process.env.SECRET,{}, async (err,userToken)=>{
+            if(err) throw err;
+            const {_id} = await User.findById(userToken._id)
+            try {
+                // Find the document by lister_id
+                const turf = await Turf.findOne({ lister_id: _id });
+        
+                if (!turf) {
+                    return res.status(400).json({ turfExists : false});
+                }
+                res.status(200).json(turf);
+            } catch (error) {
+                console.error('Error fetching turf:', error);
+                res.status(500).json({ error: 'Internal server error' });
+            }
+
+
+        })
+    }else{
+        res.json(null)
+    }
+
+    
+};
 // update turf (add)
 
 
@@ -37,4 +58,4 @@ const  createNewTurf = async (req,res) =>{
 
 
 
-module.exports = {createNewTurf}
+module.exports = {createNewTurf,getTurfByLister}
