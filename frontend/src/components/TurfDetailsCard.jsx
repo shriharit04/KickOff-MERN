@@ -12,7 +12,7 @@ function TurfDetailsCard({turf}) {
   return (
     <div className="max-w-sm rounded overflow-hidden shadow-lg transform transition-transform duration-300 hover:scale-105 bg-white w-1/4">
       {photos?.[0] && (
-      <img className="w-full" src={`http://localhost:4000/uploads/${photos[0]}`} alt={name} />
+      <img className="size-2/4 m-auto " src={`http://localhost:4000/uploads/${photos[0]}`} alt={name} />
 
       )}
       <div className="px-6 py-4">

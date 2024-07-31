@@ -1,3 +1,4 @@
+
 const mongoose = require('mongoose')
 const bcrypt = require('bcrypt')
 const validator = require('validator')
@@ -17,6 +18,9 @@ const userSchema = new Schema({
     password : {
         type : String,
         required : true,
+    },
+    contactNo:{
+        type : Number
     }
 })
 
