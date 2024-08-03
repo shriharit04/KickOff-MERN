@@ -30,6 +30,9 @@ app.use('/lister/',listerRoute)
 const userRoute = require('./routes/userRoute')
 app.use('/user/',userRoute)
 
+const bookingRoute = require('./routes/BookingRoute')
+app.use('/booking/',bookingRoute);
+
 
 
 

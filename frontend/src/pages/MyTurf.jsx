@@ -135,7 +135,7 @@ function MyTurf() {
             </div>
 
             <div className="flex flex-col mb-4">
-              <label className="text-left mb-1" htmlFor="desc">Description</label>
+              <label className="text-left mb-1 text-black" htmlFor="desc">Description</label>
               <textarea
                 id="desc"
                 className="w-full  p-2 border border-gray-300 rounded-lg"

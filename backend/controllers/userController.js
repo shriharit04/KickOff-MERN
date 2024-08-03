@@ -32,7 +32,7 @@ const signupUser = async (req,res) => {
     try {
         const user = await User.signup(name,email,password)
         //console.log(user)
-        const token = jwt.sign({email:user.email,_id:user._id},process.env.SECRET,{expiresIn:'3d'},(err,token)=>{
+        const token = jwt.sign({email:user.email,_id:user._id},process.env.SECRET,{expiresIn:'3d',},(err,token)=>{
             if(err) throw err;
             res.cookie('token',token).json(user)
         })
@@ -73,4 +73,24 @@ const getProfile = (req,res) =>{
     }
 }
 
-module.exports = { loginUser,signupUser,getProfile,logout}
+
+const updateUser =  (req,res) =>{
+    // res.json('userinfo')
+    const{token} = req.cookies
+    const updateData = req.body
+    if(token){
+        jwt.verify(token,process.env.SECRET,{}, async (err,userToken)=>{
+            if(err) throw err;
+            const {name,email,_id} = await User.findById(userToken._id)
+            const updatedUser = await User.findByIdAndUpdate(userToken._id,updateData, { new: true, runValidators: true })
+            if (!updatedUser) {
+                return res.status(400).json({ userNotFound: true });
+            }
+            res.send(updatedUser)
+        })
+    }else{
+        res.json(null)
+    }
+}
+
+module.exports = { loginUser,signupUser,getProfile,logout,updateUser}

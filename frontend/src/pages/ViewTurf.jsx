@@ -4,6 +4,7 @@ import TurfGallery from '../components/TurfGallery';
 import { BsPeople } from "react-icons/bs";
 import { IoMdTime } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
+import BookingWidget from '../components/BookingWidget';
 
 
 
@@ -31,11 +32,11 @@ const ViewTurf = ({ turfs }) => {
   }
 
   return (
-    <div className="mt-4 bg-green-700 rounded-2xl mx-4 md:mx-20 lg:mx-40 xl:mx-56 px-8 pt-8 shadow-lg">
-      <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-white mb-2 font-mono">{turf.name}</h1>
+    <div className="mt-4 bg-gray-100 rounded-2xl border-blue-800 bottom-2 mx-4 md:mx-20 lg:mx-40 xl:mx-56 px-8 py-8  shadow-lg ">
+      <h1 className="text-3xl md:text-4xl lg:text-5xl xl:text-6xl font-bold text-blue-800 mb-2 font-mono ">{turf.name}</h1>
       <AddressLink>{turf.address}</AddressLink>
 
-      <div className="flex flex-col md:flex-row justify-between gap-4 mt-4">
+      <div className="flex flex-col md:flex-row justify-between gap-4 my-6">
         <TurfGallery turf={turf} className="w-full md:w-2/3 rounded-lg overflow-hidden shadow-lg z-10" />
         <div className="w-full md:w-1/3 flex flex-col justify-around p-4 rounded-lg shadow-md bg-gray-900 text-green-400  z-0 gap-3 relative">
          <div className="flex flex-col justify-top">
@@ -59,17 +60,15 @@ const ViewTurf = ({ turfs }) => {
 
       </div>
 
-      <div className="mt-8 grid gap-8 grid-cols-1 md:grid-cols-[2fr_1fr]">
-        <div>
-          {/* <BookingWidget turf={turf} /> */}
-        </div>
-      </div>
+      
 
-      <div className="bg-gray-50 -mx-8 px-8 py-8 border-t border-gray-200 rounded-b-2xl">
-        <div>
-          <p className="text-gray-700 leading-relaxed font-serif">{turf.desc}</p>
-        </div>
-      </div>
+      <div className="bg-blue-400 -mx-8 px-8 py-8 border-t border-gray-200 rounded-b-2xl flex flex-col md:flex-row md:flex-wrap">
+  <div className="px-8 mr-2">
+    <BookingWidget turf={turf} />
+  </div>
+  <p className="text-gray-700 mt-6 leading-relaxed font-serif md:flex-1 ">{turf.desc}</p>
+</div>
+
     </div>
   );
 };

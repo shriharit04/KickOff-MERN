@@ -1,0 +1,25 @@
+/* calendar.css */
+
+.react-calendar {
+  font-family: 'Arial', sans-serif;
+}
+
+.react-calendar__navigation button {
+  color: #1d4ed8; /* Blue color for navigation buttons */
+}
+
+.react-calendar__month-view__weekdays {
+  color: #1d4ed8; /* Blue color for weekdays */
+}
+
+.react-calendar__tile {
+  color: #1d4ed8; /* Blue color for day numbers */
+}
+
+.react-calendar__tile--active {
+  background: #cce4f7; /* Light blue background for active date */
+}
+
+.react-calendar__tile--hasActive {
+  background: #e0f0ff; /* Slightly different blue for selected days */
+}
