@@ -16,7 +16,7 @@ app.use('/uploads',express.static(__dirname+'/uploads')) // now we can get photo
 app.use(express.json())
 app.use(cors({
     credentials: true,
-    origin: 'http://localhost:5173',
+    origin: process.env.CORS_ORGIN,
   }));
 app.use(cookieParser())
 
@@ -32,6 +32,10 @@ app.use('/user/',userRoute)
 
 const bookingRoute = require('./routes/BookingRoute')
 app.use('/booking/',bookingRoute);
+
+app.get('/',(req,res)=>{
+  res.json("Hello World")
+})
 
 
 
