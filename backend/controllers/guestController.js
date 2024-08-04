@@ -11,7 +11,7 @@ const viewTurf = async(req,res)=>{
     if(!mongoose.Types.ObjectId.isValid(id)){
        return res.status(404).json({error: 'No such turf'})
     }
-    console.log(id)
+    // console.log(id)
     const turf = await Turf.findById(id)
     if(!turf){
         return res.status(404).json({error: 'No such turf'})

@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './BookingWidget.css'; // Import your custom CSS file
+import './BookingWidget.css'; 
 
 const timeRanges = [
     'Late Night',
@@ -27,10 +27,12 @@ const BookingWidget = ({ turf }) => {
 
     useEffect(() => {
         const fetchUnavailableSlots = async () => {
+            console.log( date.toISOString().split('T')[0])
             try {
                 const response = await axios.get('/booking/unavailableSlots', {
                     params: { turfId: turf._id, date: date.toISOString().split('T')[0] }
                 });
+                console.log(response.data)
                 setUnavailableSlots(response.data);
             } catch (error) {
                 console.error('Error fetching unavailable slots:', error);
@@ -38,7 +40,7 @@ const BookingWidget = ({ turf }) => {
         };
 
         fetchUnavailableSlots();
-    }, [date]);
+    }, [date,showOverlay]);
 
     useEffect(() => {
         if (selectedSlots.length > 0) {
@@ -49,11 +51,27 @@ const BookingWidget = ({ turf }) => {
     }, [selectedSlots]);
 
     const handleBooking = async () => {
+        const startDateTime = new Date(date);
+        startDateTime.setHours(Math.floor(startTime));
+        startDateTime.setMinutes((startTime % 1) * 60);
+        startDateTime.setSeconds(0); // Round off seconds to 0
+        startDateTime.setMilliseconds(0); // Round off milliseconds to 0
+    
+        const endDateTime = new Date(date);
+        endDateTime.setHours(Math.floor(endTime));
+        endDateTime.setMinutes((endTime % 1) * 60);
+        endDateTime.setSeconds(0); // Round off seconds to 0
+        endDateTime.setMilliseconds(0); // Round off milliseconds to 0
+    
         try {
-            const response = await axios.post(
+            await axios.post(
                 '/booking/new',
-                { turfId: turf._id, startTime, endTime, amount },
-                // { headers: { Authorization: `Bearer ${token}` } }
+                { 
+                    turfId: turf._id, 
+                    startTime: startDateTime.toISOString(), 
+                    endTime: endDateTime.toISOString(), 
+                    amount 
+                }
             );
             alert('Booking successful!');
             setShowOverlay(false); // Close the overlay after booking
@@ -62,6 +80,8 @@ const BookingWidget = ({ turf }) => {
             alert('Failed to book turf.');
         }
     };
+    
+    
 
     const calculateAmount = (start, end) => {
         const duration = (end - start); // convert half-hour intervals to hours
@@ -69,7 +89,9 @@ const BookingWidget = ({ turf }) => {
     };
 
     const markUnavailableSlots = (value) => {
-        return unavailableSlots.some(slot => value >= slot.start && value < slot.end);
+        const now = new Date();
+        const isPast = date.toDateString() === now.toDateString() && value < now.getHours() + (now.getMinutes() / 60);
+        return isPast || unavailableSlots.some(slot => value >= slot.start && value < slot.end);
     };
 
     const generateTimeSlots = () => {
@@ -124,7 +146,7 @@ const BookingWidget = ({ turf }) => {
                 maxDate={maxDate}
             />
 
-            <button className="book-button bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={() => setShowOverlay(true)}>View Slots</button>
+            <button className="bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={() => setShowOverlay(true)}>View Slots</button>
 
             <div className="flex flex-col text-black">
                 <p>Start: {startTime}</p>
@@ -136,7 +158,7 @@ const BookingWidget = ({ turf }) => {
                         <p>Unavailable Slot: {slot.start} - {slot.end}</p>
                     </div>
                 ))}
-                <button className="book-button bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={handleBooking}>Confirm Booking</button>
+                <button className="bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={handleBooking}>Confirm Booking</button>
             </div>
 
             {showOverlay && (
@@ -144,13 +166,13 @@ const BookingWidget = ({ turf }) => {
                     <div className="bg-white rounded shadow-lg p-4">
                         <h3 className="text-xl font-semibold mb-4">Select a Time Slot</h3>
                         <div className="flex justify-between mb-4">
-                            {[0, 1, 2, 3].map(section => (
+                            {timeRanges.map((range, section) => (
                                 <button
                                     key={section}
                                     className={`px-4 py-2 m-1 border rounded ${currentSection === section ? 'bg-blue-200' : 'bg-blue-100 text-blue-700'}`}
                                     onClick={() => setCurrentSection(section)}
                                 >
-                                    {timeRanges[section]}
+                                    {range}
                                 </button>
                             ))}
                         </div>
@@ -158,7 +180,7 @@ const BookingWidget = ({ turf }) => {
                             {getSectionTimeSlots(currentSection).map((slot, index) => (
                                 <button
                                     key={index}
-                                    className={`time-slot-button px-4 py-2 border rounded ${selectedSlots.some(s => s.start === slot.start) ? 'bg-blue-950 text-white' : markUnavailableSlots(slot.start) ? 'bg-gray-300' : 'bg-blue-100 text-blue-700'}`}
+                                    className={`px-4 py-2 border rounded ${selectedSlots.some(s => s.start === slot.start) ? 'bg-blue-950 text-white' : markUnavailableSlots(slot.start) ? 'bg-gray-300' : 'bg-blue-100 text-blue-700'}`}
                                     disabled={markUnavailableSlots(slot.start)}
                                     onClick={() => handleSlotSelection(slot)}
                                 >
@@ -167,8 +189,8 @@ const BookingWidget = ({ turf }) => {
                             ))}
                         </div>
                         <button
-                            type='button'
-                            className='time-slot-button px-4 py-2 mt-1 justify-center flex m-auto border rounded bg-blue-950 text-white'
+                            type="button"
+                            className="px-4 py-2 mt-1 justify-center flex m-auto border rounded bg-blue-950 text-white"
                             onClick={() => setShowOverlay(false)}
                         >
                             Done
