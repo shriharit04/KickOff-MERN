@@ -13,6 +13,7 @@ import { UserContextProvider } from './contexts/UserContext'
 import AccountPage from './pages/AccountPage'
 import MyTurf from './pages/MyTurf'
 import MyProfile from './pages/MyProfile'
+import MyBooking from './pages/MyBooking'
 
 axios.defaults.baseURL = 'http://localhost:4000'
 axios.defaults.withCredentials = true //why??
@@ -31,10 +32,11 @@ function App() {
           <Route path='view/turf/:id' element={<ViewTurf/>}/>
           <Route path='/login' element={<Login/>}></Route>
           <Route path = '/signup' element={<Signup/>}></Route>
-          <Route path = '/account/?' element = {<AccountPage/>}></Route>
+          <Route path = '/account/?' element = {<MyProfile/>}></Route>
           <Route path = '/account/turf/' element = {<MyTurf/>}></Route>
           <Route path = '/account/profile/' element = {<MyProfile/>}></Route>
-
+          <Route path = '/account/bookings/' element = {<MyBooking/>}></Route>  
+          
           {/* <Route path = '/account/:subpage/:action' element = {<AccountPage/>}></Route> */}
 
           {/* <Route path = '/account/bookings' element = {<AccountPage/>}></Route>

@@ -13,7 +13,6 @@ router.post('/turf/new',createNewTurf)
 
 
 
-
 router.put('/turf/update/:id', async (req, res) => {    
     const { id } = req.params;
     // console.log(id)
@@ -23,7 +22,7 @@ router.put('/turf/update/:id', async (req, res) => {
       const updatedTurf = await Turf.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
     //   console.log(updatedTurf)
       if (!updatedTurf) {
-        return res.status(404).send('User not found');
+        return res.status(404).send('Turf not found');
       }
       res.send(updatedTurf);
     } catch (error) {
@@ -36,6 +35,12 @@ router.put('/turf/update/:id', async (req, res) => {
 
 
 router.get('/hasTurf',getTurfByLister)
+// router.get('getListerContact/:id', async (req,res)=>{
+//   const {id} = req.params      
+//   const {email,phone} = await User.findById(id)
+//         res.json({email,phone})
+//     }
+// )
 
 
 

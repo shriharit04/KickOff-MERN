@@ -17,16 +17,15 @@ I am trying to create an app thru which we can book turfs easily. also plannig t
 - cookie, sign in , jwt, 
 - multer
 - context window
+- BookingWidget
 
 
 ## TODO:
-- [.] update turf backend pendind
 - [ ] update username profile -> pushed to after booking
 - [ ] Get contact no and add to turf
 - [ ] alter routes. seperate lister and user routes
-- [ ] design turf page.
-- [ ] add more photos to turf page
-- [/] bring option to delete photos in form
+- [ ] add more turfs
+- [ ] improvise viewTurfs.jsx
 
 --------------------------------
 1. Create Booking system (simple alert)

@@ -6,6 +6,11 @@ const validator = require('validator')
 const Schema = mongoose.Schema
 
 const userSchema = new Schema({
+    // lister : {
+    //     type : Boolean,
+    //     default : false,
+    //     required : true,
+    // },
     name: {
         type : String,
         required : true,
@@ -19,7 +24,7 @@ const userSchema = new Schema({
         type : String,
         required : true,
     },
-    contactNo:{
+    phoneNo:{
         type : Number
     }
 })
