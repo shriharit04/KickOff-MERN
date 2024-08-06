@@ -7,7 +7,12 @@ const {authMiddleware} = require('../middleware/authMiddleware.js')
 const createToken = (email,_id) =>{
     return jwt.sign({email,_id},process.env.SECRET,{expiresIn:'3d'},(err,token)=>{
         if(err) throw err;
-        res.cookie('token',token).json("pass ok")
+        res.cookie('token', token, {
+            httpOnly: true,
+            secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
+            sameSite: 'None', // Necessary for cross-origin requests
+          });
+        res.json("pass ok")
     }) // (payload,secrety key, options)
 }
 
@@ -19,7 +24,12 @@ const loginUser = async (req,res) => {
         //create token
         jwt.sign({email:user.email,_id:user._id},process.env.SECRET,{expiresIn:'3d'},(err,token)=>{
             if(err) throw err;
-            res.cookie('token',token).json(user)})
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
+                sameSite: 'None', // Necessary for cross-origin requests
+              });
+            res.json(user)})
         // res.status(200).json({email,token})
     } catch (error) {
         res.status(400).json({error : error.message})
@@ -35,7 +45,12 @@ const signupUser = async (req,res) => {
         //console.log(user)
         const token = jwt.sign({email:user.email,_id:user._id},process.env.SECRET,{expiresIn:'3d',},(err,token)=>{
             if(err) throw err;
-            res.cookie('token',token).json(user)
+            res.cookie('token', token, {
+                httpOnly: true,
+                secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
+                sameSite: 'None', // Necessary for cross-origin requests
+              });
+              res.json(user)
         })
 
         // res.status(200).json({email,token})
@@ -45,7 +60,12 @@ const signupUser = async (req,res) => {
 }
 
 const logout = async(req,res)=>{
-    res.cookie('token','')
+    // res.cookie('token','')
+    res.cookie('token', '', {
+        httpOnly: true,
+        secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
+        sameSite: 'None', // Necessary for cross-origin requests
+      });
     res.status(200).json('logged out')
 }
 const bookTurf = async(req,res) =>{
