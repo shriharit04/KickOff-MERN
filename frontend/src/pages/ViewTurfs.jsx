@@ -1,12 +1,14 @@
 import React, { useState,useEffect } from 'react'
 import TurfDetailsCard from '../components/TurfDetailsCard'
+require('dotenv').config()
+
 
 function ViewTurfs() {
     const [turfs, setTurfs] = useState([])
     useEffect(() => {
 
         const fetchTurfs = async () => {
-          const response = await fetch('http://localhost:4000/guest/view/turfs',{
+          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/guest/view/turfs`,{
             // headers: {
             //   'Authorization': `Bearer ${user.token}`
             // }

@@ -1,4 +1,6 @@
 import { useState } from "react";
+require('dotenv').config()
+
 
 export default function TurfGallery({ turf }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
@@ -96,6 +98,6 @@ export default function TurfGallery({ turf }) {
 function Image({ src, ...rest }) {
   src = src && src.includes("https://")
     ? src
-    : "http://localhost:4000/uploads/" + src;
+    : `${process.env.REACT_APP_BACKEND_URL}/uploads/` + src;
   return <img {...rest} src={src} alt="" />;
 }

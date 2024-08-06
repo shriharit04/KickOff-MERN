@@ -3,6 +3,8 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AccountNavbar from '../components/AccountNavbar';
 import { FaRegStar, FaStar } from 'react-icons/fa';
+require('dotenv').config()
+
 
 function MyTurf() {
   const { action } = useParams();
@@ -71,7 +73,7 @@ function MyTurf() {
   useEffect(() => {
     const fetchTurf = async () => {
       try {
-        const response = await axios.get(`http://localhost:4000/lister/hasTurf/`); // Replace with actual endpoint and ID
+        const response = await axios.get(`/lister/hasTurf/`); // Replace with actual endpoint and ID
         if (response.status === 200 && response.data) {
           let data = response.data;
           setName(data.name);
@@ -153,7 +155,7 @@ function MyTurf() {
                   <img
                     key={link}
                     className='rounded-2xl w-full h-40 object-cover'
-                    src={`http://localhost:4000/uploads/${link}`}
+                    src={`${process.env.REACT_APP_BACKEND_URL}uploads/${link}`}
                     alt={link}
                   />
                   <button

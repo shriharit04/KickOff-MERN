@@ -5,6 +5,7 @@ import { BsPeople } from "react-icons/bs";
 import { IoMdTime } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
 import BookingWidget from '../components/BookingWidget';
+require('dotenv').config()
 
 
 
@@ -15,7 +16,7 @@ const ViewTurf = ({ turfs }) => {
 
   useEffect(() => {
     const fetchTurfs = async () => {
-      const response = await fetch(`http://localhost:4000/guest/view/turf/${id}`);
+      const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}guest/view/turf/${id}`);
       const json = await response.json();
 
       if (response.ok) {
