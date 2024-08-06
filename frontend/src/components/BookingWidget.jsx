@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
-import './BookingWidget.css'; 
+import './BookingWidget.css';
 
 const timeRanges = [
     'Late Night',
@@ -21,18 +21,15 @@ const BookingWidget = ({ turf }) => {
     const [currentSection, setCurrentSection] = useState(0);
     const [selectedSlots, setSelectedSlots] = useState([]);
 
-    // Calculate the max date (1 month from today)
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 1);
 
     useEffect(() => {
         const fetchUnavailableSlots = async () => {
-            console.log( date.toISOString().split('T')[0])
             try {
                 const response = await axios.get('/booking/unavailableSlots', {
                     params: { turfId: turf._id, date: date.toISOString().split('T')[0] }
                 });
-                console.log(response.data)
                 setUnavailableSlots(response.data);
             } catch (error) {
                 console.error('Error fetching unavailable slots:', error);
@@ -40,7 +37,7 @@ const BookingWidget = ({ turf }) => {
         };
 
         fetchUnavailableSlots();
-    }, [date,showOverlay]);
+    }, [date, showOverlay]);
 
     useEffect(() => {
         if (selectedSlots.length > 0) {
@@ -54,38 +51,36 @@ const BookingWidget = ({ turf }) => {
         const startDateTime = new Date(date);
         startDateTime.setHours(Math.floor(startTime));
         startDateTime.setMinutes((startTime % 1) * 60);
-        startDateTime.setSeconds(0); // Round off seconds to 0
-        startDateTime.setMilliseconds(0); // Round off milliseconds to 0
-    
+        startDateTime.setSeconds(0);
+        startDateTime.setMilliseconds(0);
+
         const endDateTime = new Date(date);
         endDateTime.setHours(Math.floor(endTime));
         endDateTime.setMinutes((endTime % 1) * 60);
-        endDateTime.setSeconds(0); // Round off seconds to 0
-        endDateTime.setMilliseconds(0); // Round off milliseconds to 0
-    
+        endDateTime.setSeconds(0);
+        endDateTime.setMilliseconds(0);
+
         try {
             await axios.post(
                 '/booking/new',
-                { 
-                    turfId: turf._id, 
-                    startTime: startDateTime.toISOString(), 
-                    endTime: endDateTime.toISOString(), 
-                    amount 
+                {
+                    turfId: turf._id,
+                    startTime: startDateTime.toISOString(),
+                    endTime: endDateTime.toISOString(),
+                    amount
                 }
             );
             alert('Booking successful!');
-            setShowOverlay(false); // Close the overlay after booking
+            setShowOverlay(false);
         } catch (error) {
             console.error('Error creating booking:', error);
             alert('Failed to book turf.');
         }
     };
-    
-    
 
     const calculateAmount = (start, end) => {
-        const duration = (end - start); // convert half-hour intervals to hours
-        setAmount(duration * turf.price); // assuming $100 per hour
+        const duration = (end - start);
+        setAmount(duration * turf.price);
     };
 
     const markUnavailableSlots = (value) => {
@@ -100,11 +95,17 @@ const BookingWidget = ({ turf }) => {
             const slot = {
                 start: hour,
                 end: hour + 0.5,
-                label: `${Math.floor(hour)}:${hour % 1 === 0.5 ? '30' : '00'} - ${Math.floor(hour + 0.5)}:${hour % 1 === 0.5 ? '00' : '30'}`
+                label: `${formatTime(hour)} - ${formatTime(hour + 0.5)}`
             };
             slots.push(slot);
         }
         return slots;
+    };
+
+    const formatTime = (time) => {
+        const hours = Math.floor(time);
+        const minutes = (time % 1) === 0.5 ? '30' : '00';
+        return `${hours}:${minutes}`;
     };
 
     const timeSlots = generateTimeSlots();
@@ -122,12 +123,10 @@ const BookingWidget = ({ turf }) => {
         } else {
             const lastSlot = selectedSlots[selectedSlots.length - 1];
             if (slot.start === lastSlot.end) {
-                // Adjacent slot
                 setSelectedSlots([...selectedSlots, slot]);
                 setStartTime(selectedSlots[0].start);
                 setEndTime(slot.end);
             } else {
-                // Non-adjacent slot, reset selection
                 setSelectedSlots([slot]);
                 setStartTime(slot.start);
                 setEndTime(slot.end);
@@ -136,7 +135,7 @@ const BookingWidget = ({ turf }) => {
     };
 
     return (
-        <div className="relative booking-widget p-4 bg-white rounded shadow-md">
+        <div className="relative booking-widget p-8 bg-white rounded shadow-md mx-auto ">
             <h2 className="text-blue-600 text-2xl font-semibold mb-4">Book a Turf</h2>
             <Calendar
                 className="calendar"
@@ -149,15 +148,8 @@ const BookingWidget = ({ turf }) => {
             <button className="bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={() => setShowOverlay(true)}>View Slots</button>
 
             <div className="flex flex-col text-black">
-                <p>Start: {startTime}</p>
-                <p>End: {endTime}</p>
-                <p>Amount: {amount}</p>
-                {/* <p>Date : {date}</p> */}
-                {unavailableSlots.map((slot, index) => (
-                    <div key={index}>
-                        <p>Unavailable Slot: {slot.start} - {slot.end}</p>
-                    </div>
-                ))}
+                <p>Slot: {formatTime(startTime)} - {formatTime(endTime)}</p>
+                <p>Amount: ₹{amount}</p>
                 <button className="bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={handleBooking}>Confirm Booking</button>
             </div>
 

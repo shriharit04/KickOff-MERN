@@ -25,7 +25,7 @@ function ViewTurfs() {
 
 
       return (
-        <div className="flex justify-center gap-6 items-center h-screen">
+        <div className="flex justify-center gap-6 items-center h-screen flex-col md:flex-row">
           {turfs && turfs.map(turf => (
             <TurfDetailsCard  key={turf._id} turf={turf}/>
           ))}
