@@ -58,7 +58,7 @@ function NewTurfForm() {
             <div className="grid grid-cols-3  gap-2lg:grid-cols-6 md:grid-cols-4">
               {addedPhotos.length>0 && addedPhotos.map(link=>(
                 <div className='h-32 flex'>
-                  <img key={link} className='rounded-2xl w-full object-cover' src={`${process.env.REACT_APP_BACKEND_URL}/uploads/${link}`} alt={link} />
+                  <img key={link} className='rounded-2xl w-full object-cover' src={`${import.meta.env.REACT_APP_BACKEND_URL}/uploads/${link}`} alt={link} />
                 </div>
               ))}
             <label className='text-xl border cursor-pointer flex items-center justify-center gap-1 bg-transparent rounded-2xl px-8 py-8' >

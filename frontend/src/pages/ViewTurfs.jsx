@@ -5,9 +5,9 @@ import TurfDetailsCard from '../components/TurfDetailsCard'
 function ViewTurfs() {
     const [turfs, setTurfs] = useState([])
     useEffect(() => {
-        console.log(process.env.REACT_APP_BACKEND_URL)
+        console.log(import.meta.env.REACT_APP_BACKEND_URL)
         const fetchTurfs = async () => {
-          const response = await fetch(`${process.env.REACT_APP_BACKEND_URL}/guest/view/turfs`,{
+          const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}/guest/view/turfs`,{
             // headers: {
             //   'Authorization': `Bearer ${user.token}`
             // }
