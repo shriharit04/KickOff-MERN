@@ -3,7 +3,6 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AccountNavbar from '../components/AccountNavbar';
 import { FaRegStar, FaStar } from 'react-icons/fa';
-require('dotenv').config()
 
 
 function MyTurf() {

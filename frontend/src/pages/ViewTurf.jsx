@@ -5,7 +5,6 @@ import { BsPeople } from "react-icons/bs";
 import { IoMdTime } from "react-icons/io";
 import { FaPhoneAlt } from "react-icons/fa";
 import BookingWidget from '../components/BookingWidget';
-require('dotenv').config()
 
 
 

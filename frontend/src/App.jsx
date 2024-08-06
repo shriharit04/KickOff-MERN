@@ -14,7 +14,6 @@ import AccountPage from './pages/AccountPage'
 import MyTurf from './pages/MyTurf'
 import MyProfile from './pages/MyProfile'
 import MyBooking from './pages/MyBooking'
-require('dotenv').config()
 
 
 axios.defaults.baseURL =  process.env.REACT_APP_REACT_APP_REACT_APP_BACKEND_URL

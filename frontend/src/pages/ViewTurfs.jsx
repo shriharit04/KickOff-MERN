@@ -1,6 +1,5 @@
 import React, { useState,useEffect } from 'react'
 import TurfDetailsCard from '../components/TurfDetailsCard'
-require('dotenv').config()
 
 
 function ViewTurfs() {
