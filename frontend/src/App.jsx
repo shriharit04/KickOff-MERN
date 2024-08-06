@@ -16,7 +16,7 @@ import MyProfile from './pages/MyProfile'
 import MyBooking from './pages/MyBooking'
 
 
-axios.defaults.baseURL =  process.env.REACT_APP_REACT_APP_REACT_APP_BACKEND_URL
+axios.defaults.baseURL =  process.env.REACT_APP_BACKEND_URL
 axios.defaults.withCredentials = true //why??
 function App() {
   // const {user} = useAuthContext()
