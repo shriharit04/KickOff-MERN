@@ -15,7 +15,7 @@ const ViewTurf = ({ turfs }) => {
 
   useEffect(() => {
     const fetchTurfs = async () => {
-      const response = await fetch(`${import.meta.env.REACT_APP_BACKEND_URL}guest/view/turf/${id}`);
+      const response = await fetch(`${import.meta.env.VITE_BACKEND_URL}guest/view/turf/${id}`);
       const json = await response.json();
 
       if (response.ok) {

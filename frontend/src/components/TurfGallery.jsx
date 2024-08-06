@@ -97,6 +97,6 @@ export default function TurfGallery({ turf }) {
 function Image({ src, ...rest }) {
   src = src && src.includes("https://")
     ? src
-    : `${import.meta.env.REACT_APP_BACKEND_URL}/uploads/` + src;
+    : `${import.meta.env.VITE_BACKEND_URL}uploads/` + src;
   return <img {...rest} src={src} alt="" />;
 }

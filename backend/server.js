@@ -15,8 +15,8 @@ app.use('/uploads',express.static(__dirname+'/uploads')) // now we can get photo
 //middleware - convert response to json
 app.use(express.json())
 app.use(cors({
-    credentials: true,
     origin: process.env.CORS_ORGIN,
+    credentials: true,
   }));
 app.use(cookieParser())
 

@@ -154,7 +154,7 @@ function MyTurf() {
                   <img
                     key={link}
                     className='rounded-2xl w-full h-40 object-cover'
-                    src={`${import.meta.env.REACT_APP_BACKEND_URL}uploads/${link}`}
+                    src={`${import.meta.env.VITE_BACKEND_URL}uploads/${link}`}
                     alt={link}
                   />
                   <button

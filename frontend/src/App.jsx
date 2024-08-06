@@ -17,11 +17,11 @@ import MyBooking from './pages/MyBooking'
 
 
 
-axios.defaults.baseURL = import.meta.env.REACT_APP_BACKEND_URL
-axios.defaults.withCredentials = true //why??
+axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL
+axios.defaults.withCredentials = true
 function App() {
   // const {user} = useAuthContext()
-  console.log(import.meta.env.REACT_APP_BACKEND_URL)
+  console.log(import.meta.env.VITE_BACKEND_URL)
 
   return (  
     <>
