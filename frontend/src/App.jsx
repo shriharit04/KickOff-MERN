@@ -16,10 +16,12 @@ import MyProfile from './pages/MyProfile'
 import MyBooking from './pages/MyBooking'
 
 
+
 axios.defaults.baseURL = import.meta.env.REACT_APP_BACKEND_URL
 axios.defaults.withCredentials = true //why??
 function App() {
   // const {user} = useAuthContext()
+  console.log(import.meta.env.REACT_APP_BACKEND_URL)
 
   return (  
     <>
