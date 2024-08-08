@@ -15,9 +15,9 @@ function Navbar() {
       </div>
       </Link>
       <div className=''>
-        <Link to="/view/turfs" className='mr-8 hover:bg-gray-800 hover:text-fgreen hover:underline p-2 border-stone-100 rounded-lg'>View Turfs</Link>
-        {!user&& (<Link to="/login" className='mr-1 hover:bg-gray -800 hover:text-fgreen hover:underline p-2 border-stone-100 rounded-lg'>Login</Link>)}
-        {user&& (<Link to="/account/profile" className='mr-1 hover:bg-gray-950 hover:text-fgreen hover:underline p-2 border-stone-100 rounded-lg'>{user.name}</Link>)}
+        <Link to="/view/turfs" className='mr-8 hover:bg-gray-100 hover:text-secondary hover:underline p-2 border-stone-100 rounded-lg'>View Turfs</Link>
+        {!user&& (<Link to="/login" className='mr-1 hover:bg-gray-100 hover:text-secondary hover:underline p-2 border-stone-100 rounded-lg'>Login</Link>)}
+        {user&& (<Link to="/account/profile" className='mr-1 hover:bg-gray-100 hover:text-secondary hover:underline p-2 border-stone-100 rounded-lg'>{user.name}</Link>)}
         
       </div>
     </div>

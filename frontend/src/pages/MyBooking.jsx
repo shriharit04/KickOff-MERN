@@ -19,6 +19,7 @@ function MyBooking() {
         setUserBookings(data.userBookings);
         setListerBookings(data.listerBookings);
       } catch (error) {
+        console.error('Error fetching booking data:', error);
       }
     };
 
@@ -29,21 +30,21 @@ function MyBooking() {
   const getStatusClass = (status) => {
     switch (status) {
       case 'Completed':
-        return 'bg-green-800 text-white';
+        return 'bg-green-600 text-white'; // Bright green
       case 'Ongoing':
-        return 'bg-yellow-500 text-black';
+        return 'bg-yellow-600 text-black'; // Bright yellow
       default:
-        return 'bg-blue-500 text-white';
+        return 'bg-blue-600 text-white'; // Bright blue
     }
   };
 
   return (
-    <div>
+    <div className="bg-gray-100 min-h-screen p-4">
       <AccountNavbar activeClass={"bookings"} />
 
       {userBookings.length > 0 && (
-        <div className="p-4">
-          <h2 className="text-2xl font-bold mb-4">User Bookings</h2>
+        <div className="p-4 bg-white shadow-md rounded-lg">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">User Bookings</h2>
           {userBookings.map((booking, index) => (
             <div
               key={index}
@@ -58,8 +59,8 @@ function MyBooking() {
       )}
 
       {listerBookings.length > 0 && (
-        <div className="p-4">
-          <h2 className="text-2xl font-bold mb-4">Lister Bookings</h2>
+        <div className="p-4 bg-white shadow-md rounded-lg mt-6">
+          <h2 className="text-2xl font-bold mb-4 text-gray-900">Lister Bookings</h2>
           {listerBookings.map((booking, index) => (
             <div
               key={index}

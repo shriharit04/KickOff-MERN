@@ -1,4 +1,3 @@
-import { useState } from 'react'
 import {BrowserRouter,Routes,Route,Navigate} from 'react-router-dom'
 import './App.css'
 import Home from './pages/Home'
@@ -21,7 +20,7 @@ axios.defaults.baseURL = import.meta.env.VITE_BACKEND_URL
 axios.defaults.withCredentials = true
 function App() {
   // const {user} = useAuthContext()
-  console.log(import.meta.env.VITE_BACKEND_URL)
+
 
   return (  
     <>

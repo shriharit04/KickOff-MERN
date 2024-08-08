@@ -74,7 +74,7 @@ export default function TurfGallery({ turf }) {
       </div>
       <button
         onClick={() => setShowAllPhotos(true)}
-        className="flex gap-1 absolute bottom-2 right-2 py-2 px-4 bg-gray-900 rounded-2xl shadow shadow-md shadow-gray-500"
+        className="flex gap-1 absolute bottom-2 right-2 py-2 px-4 bg-gray-900 rounded-2xl shadow shadow-md shadow-gray-500 text-white"
       >
         <svg
           xmlns="http://www.w3.org/2000/svg"

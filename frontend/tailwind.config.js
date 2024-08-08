@@ -10,7 +10,7 @@ export default {
         fgreen : '#0f0',
         forange : '#FB923C',
         primary: '#064635',
-        secondary: '#28a745',
+        secondary: '#5145CD',
       },
     },
   },

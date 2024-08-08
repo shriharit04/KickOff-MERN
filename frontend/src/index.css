@@ -2,165 +2,133 @@
 @tailwind components;
 @tailwind utilities;
 
+/* General Styles */
 body {
-  /* background: linear-gradient(to bottom right, rgba(0, 0, 0, 0.8), rgba(0, 0, 0, 0.8)), url('your-background-image.jpg'); */
-  @apply bg-gray-900;
+  @apply bg-white text-gray-900; /* Light background with dark text */
   background-size: cover;
-  color: white; /* Fluorescent green text color */
   justify-content: center;
   align-items: center;
   height: 100vh;
   margin: 0;
-  font-family: sans-serif;
+  font-family: 'Poppins', sans-serif; /* Updated font to match modern style */
 }
 
+/* Home Page */
 .home-page {
-  /* margin: 0;
-  font-family: 'Arial', sans-serif;
-  background: linear-gradient(135deg, #ff6f61, #ff9a76);
-  color: #ffffff;
-  height: 100vh;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  box-sizing: border-box; */
+  @apply flex flex-col justify-center items-center h-screen text-center p-8;
+  background: linear-gradient(135deg, #7D3F7D, #9B59B6); /* Gradient using purple shades */
+  color: white;
 }
 
+/* Entry Card */
 .entry-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1rem 4rem;
-  border-radius: 10px;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s;
+  @apply bg-white bg-opacity-80 p-6 rounded-3xl shadow-lg transition-transform transition-shadow;
+}
 
-}
-.entry-card p{
-  position: fixed bo;
-}
 .entry-card:hover {
-  transform: scale(1.05);
+  @apply transform scale-105 shadow-2xl;
 }
 
 .entry-card h1 {
-  font-size: 3rem;
-  margin: 0;
-  font-weight: bold;
-  text-transform: uppercase;
+  @apply text-3xl font-bold mb-2 text-gray-800;
 }
 
-.entry-card p  {
-    position: relative;
-    bottom: 0;
-    width: 100%; /* Optional: To make the element full width */
-    /* background-color: #333; Optional: Add a background color */
-    color: white; /* Optional: Add text color */
-    padding: 1rem; /* Optional: Add padding */
-    text-align: center; /* Optional: Center the text */
-  }
+.entry-card p {
+  @apply text-base text-gray-600 mt-4;
+}
 
+/* Plain Text */
+.plain-text {
+  @apply text-current no-underline cursor-default;
+}
 
-  .plain-text {
-    color: inherit; /* Use the color of the parent element */
-    text-decoration: none; /* Remove the underline */
-    cursor: default; /* Change cursor to default arrow */
-  }
-  
-
+/* User Options */
 .user-options {
-  margin-top: 1rem;
-  padding-top: 3%;
-  /* width: fit-content; */
-  display: flex;
-  flex-direction: column;
-  justify-content: space-around;
-  gap: 0.2rem;
-  margin: auto;
+  @apply flex flex-col items-center gap-4 mt-8;
 }
 
-.user-options .get-started{
-  background: #ff6f61;
-  color: white;
-  border: none;
-  padding: 2rem 4rem;
-  font-size: 2rem;
-  border-radius: 50px;
-  cursor: pointer;
-  transition: background 0.3s, transform 0.3s;
+.user-options .get-started {
+  @apply bg-purple-600 text-white border-none py-3 px-6 text-lg rounded-full cursor-pointer transition-transform transition-colors;
 }
 
-.user-options button:hover {
-  background: #ff9a76;
-  transform: translateY(-5px);
+.user-options .get-started:hover {
+  @apply bg-purple-700 transform translate-y-[-5px];
 }
 
-.user-options .lister-get-started{
-  font: 0.4rem;
-  margin: 0%;
-  padding: 0%;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif;
-  color: black;
+.user-options .lister-get-started {
+  @apply bg-blue-600 text-white border-none py-3 px-6 text-lg rounded-full cursor-pointer transition-transform transition-colors;
 }
 
-.user-options .lister-get-started:hover{
-  font-weight: 500;
+.user-options .lister-get-started:hover {
+  @apply bg-blue-700 transform translate-y-[-5px];
 }
 
+.user-options .tertiary {
+  @apply bg-transparent text-purple-800 border border-purple-800 py-3 px-6 text-lg rounded-full cursor-pointer transition-transform transition-colors;
+}
 
-/* viewTurfs page */
+.user-options .tertiary:hover {
+  @apply text-purple-900 border-purple-900 transform translate-y-[-5px];
+}
 
+/* View Turfs Page */
 .view-turfs {
-  display: flex;
-  flex-wrap: wrap;
-  flex-direction: row;
-  align-items: center;
-  justify-content: center;
-  width: 100%;
-  height: 100%;
-  padding: 2rem;
-  box-sizing: border-box;
+  @apply flex flex-wrap justify-center items-center w-full h-full p-8 gap-8;
 }
 
-/* turf details card */
-
-
+/* Turf Details Card */
 .turf-card {
-  background: rgba(255, 255, 255, 0.1);
-  padding: 1rem 1rem;
-  border-radius: 10px;
-  margin: 10%;
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
-  transition: transform 0.3s;
-  /* set min size */
-  min-width: 300px;
-  min-height: 300px;
+  @apply bg-white bg-opacity-80 p-6 rounded-3xl shadow-lg transition-transform transition-shadow;
 }
 
 .turf-card:hover {
-  transform: scale(1.05);
+  @apply transform scale-105 shadow-2xl;
 }
 
-/* login page */
-input[type="text"],input[type="password"],input[type="email"]{
-  @apply w-full border my-2 py-2 px-3 rounded-lg text-black;
+/* Login Page */
+input[type="text"],
+input[type="password"],
+input[type="email"] {
+  @apply w-full border-gray-300 my-2 py-2 px-4 rounded-lg text-gray-900 transition-colors;
 }
 
-button.primary{
-  transition: all 0.3s;
-  @apply bg-secondary text-black rounded-2xl p-4 text-lg ;
-  
+input[type="text"]:focus,
+input[type="password"]:focus,
+input[type="email"]:focus {
+  @apply border-green-500 ring-green-500; /* Use ring-green-500 for focus state */
 }
-button:hover{
-  transform: scale(1.1)
-  
+
+button.primary {
+  @apply bg-purple-600 text-white rounded-full py-3 px-6 text-lg transition-transform transition-colors;
 }
-button.secondary{
-  @apply bg-black text-fgreen border-fgreen border-2
+
+button.primary:hover {
+  @apply bg-purple-700 transform scale-105;
+}
+
+button.secondary {
+  @apply bg-blue-600 text-white rounded-full py-3 px-6 text-lg transition-transform transition-colors;
+}
+
+button.secondary:hover {
+  @apply bg-blue-700 transform scale-105;
+}
+
+button.tertiary {
+  @apply bg-transparent text-purple-800 border border-purple-800 rounded-full py-3 px-6 text-lg transition-transform transition-colors;
+}
+
+button.tertiary:hover {
+  @apply text-purple-900 border-purple-900 transform scale-105;
+}
+
+.animate-on-scroll {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.5s ease-out, transform 0.5s ease-out;
+}
+
+.animate-on-scroll.in-view {
+  opacity: 1;
+  transform: translateY(0);
 }
