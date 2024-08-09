@@ -79,20 +79,38 @@ const bookTurf = async(req,res) =>{
     // }
 }
 
-const getProfile = (req,res) =>{
-    // res.json('userinfo')
-    const{token} = req.cookies
-    if(token){
-        jwt.verify(token,process.env.SECRET,{}, async (err,userToken)=>{
-            if(err) throw err;
-            const {name,email,_id} = await User.findById(userToken._id)
-            res.json({name,email,_id})
-            // res.json({userToken})
-        })
-    }else{
-        res.json(null)
+const getProfile = async (req, res) => {
+    const { token } = req.cookies;
+
+    if (token) {
+        try {
+            // Verify the token
+            const userToken = jwt.verify(token, process.env.SECRET);
+
+            // Find the user by the ID stored in the token
+            const user = await User.findById(userToken._id);
+
+            if (!user) {
+                return res.status(404).json({ message: 'User not found' });
+            }
+
+            // Send the user's name, email, and ID as a response
+            const { name, email, _id } = user;
+            res.json({ name, email, _id });
+        } catch (err) {
+            if (err.name === 'TokenExpiredError') {
+                // Handle token expiration
+                return res.status(401).json({ message: 'Session expired. Please log in again.' });
+            } else {
+                // Handle other errors, such as invalid tokens
+                return res.status(401).json({ message: 'Invalid token. Please log in again.' });
+            }
+        }
+    } else {
+        // If no token is provided, return null
+        res.json(null);
     }
-}
+};
 
 
 const updateUser =  (req,res) =>{

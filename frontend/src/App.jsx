@@ -24,8 +24,8 @@ function App() {
 
   return (  
     <>
-    <UserContextProvider>
     <BrowserRouter>
+    <UserContextProvider>
       <Navbar/>
       <div className="pages">
         <Routes>
@@ -45,8 +45,8 @@ function App() {
           <Route path = '/account/turfs' element = {<AccountPage/>}></Route> */}
         </Routes>
       </div>
-    </BrowserRouter>
     </UserContextProvider>
+    </BrowserRouter>
   </>
   )
 }
