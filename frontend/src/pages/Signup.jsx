@@ -12,29 +12,34 @@ function Signup() {
 
 
 
-  const handleSignup = async (e)=>{
-    e.preventDefault()
+  const handleSignup = async (e) => {
+    e.preventDefault();
     try {
-       const {data} = await axios.post('/user/signup',{
-        name,email,password
-    })
-    console.log(data)
-    setUser(data)
-    setRedirect(true)
+        const { data } = await axios.post('/user/signup', {
+            name,
+            email,
+            password
+        });
+        console.log(data);
+        setUser(data);
+        setRedirect(true);
 
     } catch (error) {
-      console.log(error.message)
-      alert(error.message)
+        // Check if error.response is available and contains the expected error message
+        if (error.response.data.error) {
+            alert(error.response.data.error); // Show the backend error message
+        } else {
+            // Fallback to a generic error message if the specific one is not available
+            alert('An error occurred. Please try again.');
+        }
+        console.error('Signup error:', error.message);
     }
+}
 
-  }
   if(redirect){
     return <Navigate to = '/view/turfs'/>
   }
 
-  function addPhotoByLink(){
-    
-  }
 
 
   return (

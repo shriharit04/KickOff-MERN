@@ -8,20 +8,30 @@ function Login() {
   const [redirect,setRedirect] = useState('')
   const {user,setUser} = useContext(UserContext)
 
-  const handleLogin = async (e)=>{
-    e.preventDefault()
+  const handleLogin = async (e) => {
+    e.preventDefault();
     try {
-      const {data} = await axios.post('/user/login',{email,password})
-      console.log(data)
-      setUser(data)
-      console.log(user)
-    alert("login success")
-    setRedirect(true)
-    } catch (error){
-      alert("login failed")
+        const { data } = await axios.post('/user/login', {
+            email,
+            password
+        });
+        // console.log(data);
+        setUser(data);
+        // console.log(user);
+        alert("Login successful");
+        setRedirect(true);
+    } catch (error) {
+        if (error.response.data.error) {
+            alert(error.response.data.error); 
+        } else {
+            // Fallback to a generic error message if the specific one is not available
+            alert('Login failed. Please check your credentials and try again.');
+        }
+        console.error('Login error:', error.message);
     }
+};
+
     
-  }
   if(redirect){
     return <Navigate to = '/view/turfs'/>
   }
