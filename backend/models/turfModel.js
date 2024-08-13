@@ -33,8 +33,8 @@ const turfSchema = new Schema({
     //     type : [String],
     //     // required : true,
     // },
-    open : Number,
-    close : Number,
+    open : String,
+    close : String,
     maxPlayers: {
         type : Number,
         required : true,

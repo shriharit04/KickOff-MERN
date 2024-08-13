@@ -72,8 +72,8 @@ function NewTurfForm() {
 
             <h2 className='text-xl mt-4'>Timings and Size</h2>
             <div className="flex gap-2">
-              <input type="text" placeholder='Opens At (24hr)'  value={open} onChange={e => setOpen(e.target.value)}/>
-              <input type="text" placeholder='Closes At (24hr)'  value={close} onChange={e => setClose(e.target.value)}/>
+              <input type="type" placeholder='Opens At (24hr)'  value={open} onChange={e => setOpen(e.target.value)}/>
+              <input type="type" placeholder='Closes At (24hr)'  value={close} onChange={e => setClose(e.target.value)}/>
               <input type="text" placeholder='Turf Size (5v5, 7v7)' value={size} onChange={e => setSize(e.target.value)} />
               <input type="text" placeholder='Turf Price(per hour)'  value={price} onChange={e => setPrice(e.target.value)}/>
             </div>

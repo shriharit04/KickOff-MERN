@@ -7,6 +7,11 @@ const authMiddleware = require('../middleware/authMiddleware.js');
 
 // Create Booking
 router.post('/new', authMiddleware, async (req, res) => {
+  // Check if user is authenticated
+  if (!req.user) {
+    return res.status(401).json({ error: 'Unauthorized. Please log in to continue.' });
+  }
+
   const { turfId, startTime, endTime, amount } = req.body;
   const userId = req.user._id;  // Get the userId from the decoded JWT token
 
@@ -15,7 +20,7 @@ router.post('/new', authMiddleware, async (req, res) => {
     const turf = await Turf.findById(turfId);
   
     if (!turf) {
-      return res.status(400).send('Turf not found');
+      return res.status(400).json({ error: 'Turf not found' });
     }
 
     // Check if turf is available
@@ -29,7 +34,7 @@ router.post('/new', authMiddleware, async (req, res) => {
     });
 
     if (existingBookings.length > 0) {
-      return res.status(400).send('Turf not available at the selected time');
+      return res.status(400).json({ error: 'Turf not available at the selected time' });
     }
 
     // Calculate duration in minutes
@@ -39,11 +44,12 @@ router.post('/new', authMiddleware, async (req, res) => {
     const booking = new Booking({ userId, turfId, startTime, endTime, duration, amount });
     await booking.save();
 
-    res.status(201).send(booking);
+    res.status(201).json(booking);
   } catch (error) {
-    res.status(500).send(error.message);
+    res.status(500).json({ error: error.message });
   }
 });
+
 
 
 

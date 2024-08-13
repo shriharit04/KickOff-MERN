@@ -99,11 +99,11 @@ input[type="email"]:focus {
 }
 
 button.primary {
-  @apply bg-purple-600 text-white rounded-full py-3 px-6 text-lg transition-transform transition-colors;
+  @apply bg-indigo-600 text-white rounded-full py-3 px-6 text-lg transition-transform transition-colors;
 }
 
 button.primary:hover {
-  @apply bg-purple-700 transform scale-105;
+  @apply bg-indigo-700 transform scale-105;
 }
 
 button.secondary {
