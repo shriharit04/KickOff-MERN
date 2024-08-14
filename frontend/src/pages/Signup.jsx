@@ -7,8 +7,10 @@ function Signup() {
   const [name,setName] = useState('')
   const [email,setEmail] = useState("")
   const [password,setPassword] = useState("")
+  const [phoneNo, setPhoneNo] = useState()
   const {setUser} = useContext(UserContext)
   const [redirect,setRedirect] = useState('')
+  
 
 
 
@@ -18,7 +20,8 @@ function Signup() {
         const { data } = await axios.post('/user/signup', {
             name,
             email,
-            password
+            password,
+            phoneNo
         });
         console.log(data);
         setUser(data);
@@ -49,7 +52,9 @@ function Signup() {
       <form className='max-w-md mx-auto border-spacing-1' onSubmit={handleSignup} >
         <input type="text" placeholder='Your Name' onChange={(e)=>setName(e.target.value)} value={name} />
         <input type="email" placeholder='your@email.com' onChange={(e)=>setEmail(e.target.value)} value={email} />
+        <input type="tel" placeholder='Phone Number' onChange={(e)=>setPhoneNo(e.target.value)} value={phoneNo}  />
         <input type="password" placeholder='password' onChange={(e)=>setPassword(e.target.value)} value={password}  />
+
         <button className='mt-4 w-full primary' type='submit'>Signup</button>
       </form>
       <p className='text-white'>Have an account? , <Link className='underline'to="/login">Click to Login</Link></p>

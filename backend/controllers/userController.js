@@ -1,4 +1,6 @@
 const User = require('../models/userModel')
+const Turf = require('../models/turfModel')
+
 const jwt = require('jsonwebtoken')
 const {authMiddleware} = require('../middleware/authMiddleware.js')
 
@@ -39,11 +41,11 @@ const loginUser = async (req,res) => {
 
 //sign up user
 const signupUser = async (req,res) => {
-    const {name,email,password} = req.body
+    const {name,email,password,phoneNo} = req.body
     try {
-        const user = await User.signup(name,email,password)
+        const user = await User.signup(name,email,password,phoneNo)
         //console.log(user)
-        const token = jwt.sign({email:user.email,_id:user._id},process.env.SECRET,{expiresIn:'3d',},(err,token)=>{
+        const token = jwt.sign({email:user.email,_id:user._id,phoneNo:user.phoneNo},process.env.SECRET,{expiresIn:'3d',},(err,token)=>{
             if(err) throw err;
             res.cookie('token', token, {
                 httpOnly: true,
@@ -95,8 +97,8 @@ const getProfile = async (req, res) => {
             }
 
             // Send the user's name, email, and ID as a response
-            const { name, email, _id } = user;
-            res.json({ name, email, _id });
+            const { name, email, _id ,phoneNo} = user;
+            res.json({ name, email, _id,phoneNo});
         } catch (err) {
             if (err.name === 'TokenExpiredError') {
                 // Handle token expiration
@@ -125,7 +127,20 @@ const updateUser =  (req,res) =>{
             if (!updatedUser) {
                 return res.status(400).json({ userNotFound: true });
             }
+            
             res.send(updatedUser)
+            try{
+                await Turf.findOneAndUpdate(
+                    { lister_id: userToken._id },
+                    {
+                        contactNo: updatedUser.phoneNo,
+                        contactMail: updatedUser.email
+                    }
+                );
+            }catch(err){
+                console.log(err)
+                console.log('error in updating contact info')
+            }
         })
     }else{
         res.json(null)
