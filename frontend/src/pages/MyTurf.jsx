@@ -203,7 +203,7 @@ function MyTurf() {
                   <input
                     id="open"
                     className="w-full p-2 border border-gray-300 rounded-lg"
-                    type="text"
+                    type="time"
                     value={open}
                     onChange={e => setOpen(e.target.value)}
                   />
@@ -213,7 +213,7 @@ function MyTurf() {
                   <input
                     id="close"
                     className="w-full p-2 border border-gray-300 rounded-lg"
-                    type="text"
+                    type="time"
                     value={close}
                     onChange={e => setClose(e.target.value)}
                   />
@@ -337,7 +337,7 @@ function MyTurf() {
                   <input
                     id="open"
                     className="w-full p-2 border border-gray-300 rounded-lg"
-                    type="text"
+                    type="time"
                     value={open}
                     onChange={e => setOpen(e.target.value)}
                   />
@@ -347,7 +347,7 @@ function MyTurf() {
                   <input
                     id="close"
                     className="w-full p-2 border border-gray-300 rounded-lg"
-                    type="text"
+                    type="time"
                     value={close}
                     onChange={e => setClose(e.target.value)}
                   />

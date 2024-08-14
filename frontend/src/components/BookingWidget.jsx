@@ -3,6 +3,7 @@ import axios from 'axios';
 import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './BookingWidget.css';
+import { useNavigate } from "react-router-dom";
 
 const timeRanges = [
     'Late Night',
@@ -11,7 +12,11 @@ const timeRanges = [
     'Evening',
 ];
 
+
 const BookingWidget = ({ turf }) => {
+
+    const navigate = useNavigate();
+
     const [date, setDate] = useState(new Date());
     const [startTime, setStartTime] = useState(0); // Default start time
     const [endTime, setEndTime] = useState(0); // Default end time
@@ -30,6 +35,7 @@ const BookingWidget = ({ turf }) => {
                 const response = await axios.get('/booking/unavailableSlots', {
                     params: { turfId: turf._id, date: date.toISOString().split('T')[0] }
                 });
+                console.log(response.data)
                 setUnavailableSlots(response.data);
             } catch (error) {
                 console.error('Error fetching unavailable slots:', error);
@@ -61,7 +67,7 @@ const BookingWidget = ({ turf }) => {
         endDateTime.setMilliseconds(0);
 
         try {
-            await axios.post(
+             const response = await axios.post(
                 '/booking/new',
                 {
                     turfId: turf._id,
@@ -73,6 +79,12 @@ const BookingWidget = ({ turf }) => {
             alert('Booking successful!');
             setShowOverlay(false);
         } catch (error) {
+            if (response.status = 401) {
+                alert("login First");
+                navigate("/login");
+
+            }
+
             console.error('Error creating booking:', error);
             alert('Failed to book turf.');
         }
