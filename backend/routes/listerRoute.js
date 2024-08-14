@@ -17,7 +17,8 @@ router.put('/turf/update/:id', async (req, res) => {
     const { id } = req.params;
     // console.log(id)
     const updateData = req.body;
-    // console.log(updateData)
+
+
     try {
       const updatedTurf = await Turf.findByIdAndUpdate(id, updateData, { new: true, runValidators: true });
     //   console.log(updatedTurf)

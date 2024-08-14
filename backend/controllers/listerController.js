@@ -1,7 +1,6 @@
 const Turf = require('../models/turfModel')
 const mongoose = require('mongoose')
 const User = require('../models/userModel')
-
 //add turf (post)
 const jwt = require('jsonwebtoken')
 const  createNewTurf = async (req,res) =>{
@@ -13,6 +12,7 @@ const  createNewTurf = async (req,res) =>{
         const placeDoc = await Turf.create({
             lister_id: userToken._id,
             contactMail : userToken.email,
+            contactNo : userToken.phoneNo,
             name,address,desc,photos,price,open,close,maxPlayers
 
         })

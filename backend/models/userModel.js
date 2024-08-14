@@ -25,12 +25,13 @@ const userSchema = new Schema({
         required : true,
     },
     phoneNo:{
-        type : Number
+        type : Number,
+        required:true,
     }
 })
 
 //static signup method
-userSchema.statics.signup = async  function (name,email, password){
+userSchema.statics.signup = async  function (name,email, password,phoneNo){
     //validation
     if(!email || !password){
         throw Error('All fields must be filled')
@@ -43,6 +44,10 @@ userSchema.statics.signup = async  function (name,email, password){
         throw Error('Pwd not strong enough')
     }
 
+    if(!validator.isMobilePhone(phoneNo,['en-IN'])) {
+        throw Error('Invalid phone number');
+    }
+
     const exists = await this.findOne({email})
     if(exists){
         throw Error('Email already in use')
@@ -51,7 +56,7 @@ userSchema.statics.signup = async  function (name,email, password){
     const salt = await bcrypt.genSalt(10)
     const hash = await bcrypt.hash(password,salt)
 
-    const user = await this.create({name,email, password : hash})
+    const user = await this.create({name,email, phoneNo, password : hash})
     return user
 }
 

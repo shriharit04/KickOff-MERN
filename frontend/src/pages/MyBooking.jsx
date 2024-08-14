@@ -39,7 +39,7 @@ function MyBooking() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4">
+    <div className="bg-gray-100 min-h-screen p-4 sm:mx-1 mg:mx-6">
       <AccountNavbar activeClass={"bookings"} />
 
       {userBookings.length > 0 && (

@@ -86,13 +86,13 @@ body {
 }
 
 /* Login Page */
-input[type="text"],
+input[type="text"],input[type="tel"],
 input[type="password"],
 input[type="email"] {
   @apply w-full border-gray-300 my-2 py-2 px-4 rounded-lg text-gray-900 transition-colors;
 }
 
-input[type="text"]:focus,
+input[type="text"]:focus,input[type="tel"]:focus,
 input[type="password"]:focus,
 input[type="email"]:focus {
   @apply border-green-500 ring-green-500; /* Use ring-green-500 for focus state */

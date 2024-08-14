@@ -9,6 +9,7 @@ import BookingWidget from '../components/BookingWidget';
 const ViewTurf = ({ turfs }) => {
   const { id } = useParams();
   const [turf, setTurf] = useState(null);
+  
 
   useEffect(() => {
     const fetchTurfs = async () => {
@@ -47,14 +48,14 @@ const ViewTurf = ({ turfs }) => {
             </div>
           </div>
           <div className="flex items-center gap-2 mt-4 relative">
-            <button className="justify-end px-4 py-2 right-0 left-0 w-fit rounded-lg shadow-md secondary max-w-sm mx-auto">Price: ₹{turf.price} /hour</button>
+            <button className="justify-end px-4 py-2 right-0 left-0 w-fit rounded-lg shadow-md secondary max-w-sm mx-auto cursor-default">Price: ₹{turf.price} /hour</button>
           </div>
         </div>
       </div>
 
       <div className="bg-blue-400 -mx-8 px-8 py-8 border-t border-gray-200 rounded-b-2xl flex flex-col md:flex-row md:flex-wrap">
         <div className="sm:px-0 md:px-8 mr-2 w-full md:w-auto">
-          <BookingWidget turf={turf} />
+          <BookingWidget turf={turf} id="bookingWidget"/>
         </div>
         <p className="text-gray-700 mt-6 leading-relaxed font-serif md:flex-1">{turf.desc}</p>
       </div>
