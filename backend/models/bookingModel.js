@@ -8,6 +8,6 @@ const bookingSchema = new mongoose.Schema({
   endTime: { type: Date, required: true },
   amount: { type: Number, required: true },
   status: { type: String, default: 'Booked' },
-});
+}, { timestamps: true });
 
 module.exports = mongoose.model('Booking', bookingSchema);

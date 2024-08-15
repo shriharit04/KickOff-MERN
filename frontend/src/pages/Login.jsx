@@ -37,7 +37,7 @@ function Login() {
   }
 
   return (
-    <div className='-mt-8 min-h-screen max-h-screen flex flex-col items-center justify-around border-solid border-gray-200 '>
+    <div className='mt-8 min-h-screen max-h-screen flex flex-col items-center justify-around border-solid border-gray-200 '>
       <div className='border-spacing-1 border-black border-8 bg-gradient-to-tr from-gray-200 to-indigo-600 backdrop-blur-lg rounded-3xl p-8'>
       <h1 className='text-4xl text-center mb-4'>Login</h1>
       <form className='max-w-md mx-auto border-spacing-1' onSubmit={handleLogin} >

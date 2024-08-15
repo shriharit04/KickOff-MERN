@@ -122,7 +122,7 @@ function MyTurf() {
 
         <div className="text-center">
           <div className={!editable ? "pointer-events-none opacity-80" : ""}>
-            <form className='p-8 w-full max-w-3xl mx-auto mt-8 flex flex-col border-gray-300 rounded-lg border-2  shadow-gray-400-lg' onSubmit={turfExists ? updateTurf : addNewTurf}>
+            <form className='p-8 w-full max-w-3xl mx-auto mt-8 flex flex-col border-gray-300 rounded-lg border-2 bg-white  shadow-gray-400-lg' onSubmit={turfExists ? updateTurf : addNewTurf}>
               <h2 className='text-xl mt-4'>Turf Details</h2>
 
               <div className="flex flex-col mb-4">
@@ -266,7 +266,7 @@ function MyTurf() {
         </div>
         <div className="text-center">
           <div className={!editable ? "pointer-events-none opacity-0" : ""}>
-            <form className='p-8 w-full max-w-3xl mx-auto mt-8 flex flex-col border-gray-300 rounded-lg border-2  shadow-gray-400-lg' onSubmit={addNewTurf}>
+            <form className='p-8 w-full max-w-3xl mx-auto mt-8 flex flex-col border-gray-300 rounded-lg border-2 bg-white shadow-gray-400-lg' onSubmit={addNewTurf}>
               <h2 className='text-xl mt-4'>Turf Details</h2>
 
               <div className="flex flex-col mb-4">

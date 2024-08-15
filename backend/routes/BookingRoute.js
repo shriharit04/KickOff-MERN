@@ -80,10 +80,11 @@ router.get('/unavailableSlots', async (req, res) => {
 
   router.get('/myBookings', authMiddleware, async (req, res) => {
     const userDoc = req.user;
-    
+  
     try {
-      // Find bookings where the user is the one who booked
-      const userBookings = await Booking.find({ userId: userDoc._id });
+      // Find bookings where the user is the one who booked (sorted descending)
+      const userBookings = await Booking.find({ userId: userDoc._id })
+        .sort({ createdAt: -1 }); // Sort by createdAt in descending order
   
       // Find turf documents where the user is the lister
       const turfs = await Turf.find({ lister_id: userDoc._id });
@@ -91,8 +92,10 @@ router.get('/unavailableSlots', async (req, res) => {
       // Extract turf IDs from the retrieved turfs
       const turfIds = turfs.map(turf => turf._id);
   
-      // Find bookings where the user is the lister (by matching turf IDs)
-      const listerBookings = await Booking.find({ turfId: { $in: turfIds } });  
+      // Find bookings where the user is the lister (sorted descending)
+      const listerBookings = await Booking.find({ turfId: { $in: turfIds } })
+        .sort({ createdAt: -1 }); // Sort by createdAt in descending order
+  
       // Send the bookings data with status 200
       res.status(200).json({ userBookings, listerBookings });
     } catch (error) {
