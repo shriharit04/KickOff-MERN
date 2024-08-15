@@ -37,7 +37,7 @@ const MyProfile = () => {
     <>
       <AccountNavbar activeClass={"profile"} />
       
-      <div className='mt-8 flex flex-col text-center max-w-lg mx-auto p-8 border-gray-300 rounded-lg border-2 shadow-gray-400-lg'>
+      <div className='mt-8 flex flex-col text-center max-w-lg mx-auto p-8 border-gray-300 bg-white rounded-lg border-2 shadow-gray-400-lg'>
         {!editable && (
           <button
             className='primary p-8 mt-2'

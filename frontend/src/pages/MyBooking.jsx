@@ -39,11 +39,11 @@ function MyBooking() {
   };
 
   return (
-    <div className="bg-gray-100 min-h-screen p-4 sm:mx-1 mg:mx-6">
+    <div className="bg-gray-100 min-h-screen p-2 ">
       <AccountNavbar activeClass={"bookings"} />
 
       {userBookings.length > 0 && (
-        <div className="p-4 bg-white shadow-md rounded-lg">
+        <div className="p-4 bg-white shadow-md rounded-lg sm:mx-4 md:mx-72 mt-8">
           <h2 className="text-2xl font-bold mb-4 text-gray-900">User Bookings</h2>
           {userBookings.map((booking, index) => (
             <div
@@ -59,7 +59,7 @@ function MyBooking() {
       )}
 
       {listerBookings.length > 0 && (
-        <div className="p-4 bg-white shadow-md rounded-lg mt-6">
+        <div className="p-4 bg-white shadow-md rounded-lg mt-6 sm:mx-4 md:mx-72" >
           <h2 className="text-2xl font-bold mb-4 text-gray-900">Lister Bookings</h2>
           {listerBookings.map((booking, index) => (
             <div

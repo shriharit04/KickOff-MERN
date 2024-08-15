@@ -15,6 +15,8 @@ const timeRanges = [
 
 const BookingWidget = ({ turf }) => {
 
+    console.log(turf.open)
+    console.log(turf.close)
     const navigate = useNavigate();
 
     const [date, setDate] = useState(new Date());
@@ -97,10 +99,32 @@ const BookingWidget = ({ turf }) => {
 
     const markUnavailableSlots = (value) => {
         const now = new Date();
-        const isPast = date.toDateString() === now.toDateString() && value < now.getHours() + (now.getMinutes() / 60);
-        return isPast || unavailableSlots.some(slot => value >= slot.start && value < slot.end);
+        
+        // Open and close times as strings
+        const openTime = turf.open;
+        const closeTime = turf.close;
+    
+        // Convert open and close times to fractional hours
+        const [openHour, openMinute] = openTime.split(":").map(Number);
+        const [closeHour, closeMinute] = closeTime.split(":").map(Number);
+        const openValue = openHour + openMinute / 60;
+        const closeValue = closeHour + closeMinute / 60;
+    
+        // Check if the slot is in the past
+        const isPast = date.toDateString() === now.toDateString() &&
+                       value < now.getHours() + (now.getMinutes() / 60);
+    
+        // Check if the slot is outside open hours
+        const isOutsideBusinessHours = value < openValue || value >= closeValue;
+    
+        // Check if the slot falls within any unavailable slots
+        const isUnavailable = unavailableSlots.some(slot => 
+            value >= slot.start && value < slot.end
+        );
+    
+        return isPast || isOutsideBusinessHours || isUnavailable;
     };
-
+    
     const generateTimeSlots = () => {
         const slots = [];
         for (let hour = 0; hour < 24; hour += 0.5) {
