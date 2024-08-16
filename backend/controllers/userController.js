@@ -3,20 +3,11 @@ const Turf = require('../models/turfModel')
 
 const jwt = require('jsonwebtoken')
 const {authMiddleware} = require('../middleware/authMiddleware.js')
+require('dotenv').config()
+const axios = require('axios')
 
 
 
-const createToken = (email,_id) =>{
-    return jwt.sign({email,_id},process.env.SECRET,{expiresIn:'3d'},(err,token)=>{
-        if(err) throw err;
-        res.cookie('token', token, {
-            httpOnly: true,
-            secure: process.env.NODE_ENV === 'production', // Ensure this is true in production
-            sameSite: 'None', // Necessary for cross-origin requests
-          });
-        res.json("pass ok")
-    }) // (payload,secrety key, options)
-}
 
 //logjn user
 const loginUser = async (req,res) => {
@@ -38,6 +29,56 @@ const loginUser = async (req,res) => {
     }
 }
 
+const loginUserGoogle = async (req,res)=>{
+    const {code} = req.body
+
+    try{
+          // Exchange the authorization code for an access token
+    const response = await axios.post('https://oauth2.googleapis.com/token', null, {
+        params: {
+          code: code,
+          client_id: process.env.GOOGLE_CLIENT_ID,
+          client_secret: process.env.GOOGLE_CLIENT_SECRET,
+          redirect_uri: process.env.GOOGLE_REDIRECT_URI,
+          grant_type: 'authorization_code',
+        },
+      });
+      const {access_token} =  response.data;
+
+      // Retrieve user information from Google
+      const userInfoResponse = await axios.get('https://www.googleapis.com/oauth2/v3/userinfo', {
+        headers: {
+          Authorization: `Bearer ${access_token}`,
+        },
+      });
+
+
+      const userInfo = userInfoResponse.data;
+      const {email,name} = userInfo
+      console.log(name,email)
+
+      let userDoc = await User.findOne({email});
+      if(!userDoc){
+        userDoc = await User.create({
+            name,email
+        })
+      }
+      jwt.sign({email:userDoc.email,_id:userDoc._id} , process.env.SECRET , {expiresIn:'3d'},(err,token)=>{
+        if(err) throw err;
+        res.cookie('token',token,{
+            httpOnly:true,
+            secure : process.env.NODE_ENV === 'production',
+            sameSite : 'None',
+        })
+        res.json(userDoc)
+      })
+    }catch(error){
+        res.status(400).json({error:error.message})
+        }
+
+        
+    
+}
 
 //sign up user
 const signupUser = async (req,res) => {
@@ -70,16 +111,7 @@ const logout = async(req,res)=>{
       });
     res.status(200).json('logged out')
 }
-const bookTurf = async(req,res) =>{
-    // body must have {user,turf}
-    // const {user,turf} = req.body
-    // try {
-    //     const bookedTurf = await Turf.book(user,turf)
-    //     res.status(200).json(bookedTurf)
-    // } catch (error) {
-    //     res.status(400).json({error : error.message})
-    // }
-}
+
 
 const getProfile = async (req, res) => {
     const { token } = req.cookies;
@@ -147,4 +179,6 @@ const updateUser =  (req,res) =>{
     }
 }
 
-module.exports = { loginUser,signupUser,getProfile,logout,updateUser}
+
+
+module.exports = { loginUser,signupUser,getProfile,logout,updateUser,loginUserGoogle}

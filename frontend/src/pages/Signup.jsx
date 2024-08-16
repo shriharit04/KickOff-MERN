@@ -3,6 +3,8 @@ import { Link,Navigate} from 'react-router-dom'
 import axios from 'axios'
 import { UserContext } from '../contexts/UserContext'
 import { useContext } from 'react'
+import GoogleLogin from '../components/GoogleLogin';
+
 function Signup() {
   const [name,setName] = useState('')
   const [email,setEmail] = useState("")
@@ -57,6 +59,7 @@ function Signup() {
 
         <button className='mt-4 w-full primary' type='submit'>Signup</button>
       </form>
+      <GoogleLogin type='signup'/>
       <p className='text-white'>Have an account? , <Link className='underline'to="/login">Click to Login</Link></p>
       </div>
     </div>
