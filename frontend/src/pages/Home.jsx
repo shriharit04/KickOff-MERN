@@ -6,58 +6,48 @@ import { GiSoccerBall, GiConfirmed } from "react-icons/gi";
 import { MdSchedule } from "react-icons/md";
 import { FaCalendarCheck } from "react-icons/fa";
 import { LuCalendarClock } from "react-icons/lu";
-import {Link} from 'react-router-dom'
+import { Link } from 'react-router-dom';
 
 const Home = () => {
-  const [isInView, setIsInView] = useState(false);
-
-  const handleScroll = () => {
-    const scrollPosition = window.scrollY + window.innerHeight;
-    const elements = document.querySelectorAll('.animate-on-scroll');
-
-    elements.forEach(element => {
-      const elementPosition = element.offsetTop + element.offsetHeight;
-      if (scrollPosition > elementPosition) {
-        element.classList.add('in-view');
-      } else {
-        element.classList.remove('in-view');
-      }
-    });
-  };
-
-  useEffect(() => {
-    window.addEventListener('scroll', handleScroll);
-    handleScroll();
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
   return (
     <div>
       {/* Hero Section */}
       <section className="relative h-screen flex items-center bg-white">
         <div className="absolute inset-0 bg-white"></div>
         <motion.div
-          className="relative container mx-auto flex flex-col md:flex-row items-center px-6 py-16 text-blue-700 bg-white shadow-lg transform transition-transform duration-300 ease-in-out"
+          className="relative container mx-auto flex flex-col md:flex-row items-center px-6 py-16 text-blue-700 bg-white shadow-lg"
           initial={{ scale: 1 }}
           whileInView={{ scale: 1.05 }}
           viewport={{ once: true }}
+          transition={{ duration: 0.5 }}
         >
           {/* Text Section */}
-          <div className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0">
-            <h1 className="text-5xl font-bold mb-4">Book Your Turf with Ease</h1>
+          <motion.div
+            className="w-full md:w-1/2 text-center md:text-left mb-8 md:mb-0"
+            initial={{ opacity: 0, x: -50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
+            <h1 className="text-5xl font-bold mb-4">Let's KickOff</h1>
             <p className="text-xl mb-8">Find, book, and manage your turf bookings seamlessly.</p>
             <Link
               to={"/view/turfs"}
-              href="#features"
               className="bg-blue-700 hover:bg-blue-900 text-white font-bold py-3 px-6 rounded-full"
             >
               Book a Turf Now
             </Link>
-          </div>
+          </motion.div>
           {/* Hero Icon */}
-          <div className="w-full md:w-1/2 text-center md:text-right">
+          <motion.div
+            className="w-full md:w-1/2 text-center md:text-right"
+            initial={{ opacity: 0, x: 50 }}
+            whileInView={{ opacity: 1, x: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.5 }}
+          >
             <img src={HeroIcon} alt="Hero Icon" className="w-full h-auto object-cover" />
-          </div>
+          </motion.div>
         </motion.div>
       </section>
 
@@ -85,7 +75,7 @@ const Home = () => {
             ].map((feature, index) => (
               <motion.div
                 key={index}
-                className="feature animate-on-scroll"
+                className="feature"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -124,7 +114,7 @@ const Home = () => {
             ].map((step, index) => (
               <motion.div
                 key={index}
-                className="how-it-works animate-on-scroll"
+                className="how-it-works"
                 initial={{ opacity: 0, y: 20 }}
                 whileInView={{ opacity: 1, y: 0 }}
                 viewport={{ once: true }}
@@ -153,7 +143,7 @@ const Home = () => {
         <p className="text-xl mb-8">Sign up today and start booking your turfs easily.</p>
         <Link
           to="/signup"
-          className="bg-white text-purple-600 font-bold py-3 px-6 rounded-full hover:bg-gray-200"
+          className="bg-white text-blue-700 font-bold py-3 px-6 rounded-full hover:bg-gray-200"
         >
           Sign Up Now
         </Link>

@@ -25,7 +25,6 @@ function Signup() {
             password,
             phoneNo
         });
-        console.log(data);
         setUser(data);
         setRedirect(true);
 
