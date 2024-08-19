@@ -44,13 +44,11 @@ function MyTurf() {
   async function addNewTurf(ev) {
     ev.preventDefault();
     const { data } = await axios.post('/lister/turf/new', { name, address, desc, addedPhotos, price, open, close, size });
-    console.log(data);
     alert("New Turf added");
   }
 
   async function updateTurf(ev) {
     ev.preventDefault();
-    console.log(turfExists);
     const { data } = await axios.put(`/lister/turf/update/${turfExists}`, { name, address, desc, photos: addedPhotos, price, open, close, maxPlayers: size });
     alert("Turf details updated");
   }

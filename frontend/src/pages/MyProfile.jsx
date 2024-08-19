@@ -11,7 +11,6 @@ const MyProfile = () => {
   const [email, setEmail] = useState(user.email);
   const [phoneNo, setPhoneNo] = useState(user.phoneNo);
   const [name, setName] = useState(user.name);
-  console.log(user)
 
   async function logout() {
     try {

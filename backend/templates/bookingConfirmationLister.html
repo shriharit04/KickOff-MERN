@@ -1,0 +1,75 @@
+<!-- bookingConfirmationForOwnerTemplate.html -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Booking Confirmation</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f9f9f9;
+            color: #333;
+            margin: 0;
+            padding: 0;
+        }
+        .container {
+            max-width: 600px;
+            margin: 20px auto;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 8px;
+            box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #1e90ff;
+            font-size: 24px;
+            margin-bottom: 20px;
+        }
+        p {
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .details {
+            margin: 20px 0;
+            background-color: #f0f8ff;
+            padding: 10px;
+            border-radius: 5px;
+        }
+        .details li {
+            margin: 8px 0;
+            list-style-type: none;
+        }
+        .footer {
+            margin-top: 30px;
+            font-size: 12px;
+            color: #777;
+            text-align: center;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>📅 New Booking!</h1>
+        <p>We are pleased to inform you that a new booking has been confirmed for your turf. Below are the details of the booking:</p>
+        
+        <div class="details">
+            <ul>
+                <li><strong>Booking ID:</strong> {{bookingId}}</li>
+                <li><strong>Customer Name:</strong> {{customerName}}</li>
+                <li><strong>Customer Contact:</strong> {{customerEmail}}</li>
+                <li><strong>Turf Name:</strong> {{turfName}}</li>
+                <li><strong>Date:</strong> {{bookingDate}}</li>
+                <li><strong>Start Time:</strong> {{startTime}}</li>
+                <li><strong>End Time:</strong> {{endTime}}</li>
+            </ul>
+        </div>
+
+        <p>Please ensure that the turf is ready for the booking. If you have any questions or need further information, feel free to contact us.</p>
+
+        <div class="footer">
+            &copy; 2024 Kickoff Turf. All rights reserved.
+        </div>
+    </div>
+</body>
+</html>

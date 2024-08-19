@@ -14,9 +14,6 @@ const timeRanges = [
 
 
 const BookingWidget = ({ turf }) => {
-
-    console.log(turf.open)
-    console.log(turf.close)
     const navigate = useNavigate();
 
     const [date, setDate] = useState(new Date());
@@ -37,7 +34,6 @@ const BookingWidget = ({ turf }) => {
                 const response = await axios.get('/booking/unavailableSlots', {
                     params: { turfId: turf._id, date: date.toISOString().split('T')[0] }
                 });
-                console.log(response.data)
                 setUnavailableSlots(response.data);
             } catch (error) {
                 console.error('Error fetching unavailable slots:', error);
@@ -69,28 +65,27 @@ const BookingWidget = ({ turf }) => {
         endDateTime.setMilliseconds(0);
 
         try {
-             const response = await axios.post(
-                '/booking/new',
-                {
-                    turfId: turf._id,
-                    startTime: startDateTime.toISOString(),
-                    endTime: endDateTime.toISOString(),
-                    amount
-                }
-            );
+            const response = await axios.post('/booking/new', {
+                turfId: turf._id,
+                startTime: startDateTime.toISOString(),
+                endTime: endDateTime.toISOString(),
+                amount
+            });
+            
             alert('Booking successful!');
             setShowOverlay(false);
         } catch (error) {
-            if (response.status = 401) {
-                alert("login First");
+            // Ensure error handling checks the actual error response
+            if (error.response && error.response.status === 401) {
+                alert("Please log in first");
                 navigate("/login");
-
+            } else {
+                console.error('Error creating booking:', error);
+                alert('Failed to book turf.');
             }
-
-            console.error('Error creating booking:', error);
-            alert('Failed to book turf.');
         }
-    };
+    }
+        
 
     const calculateAmount = (start, end) => {
         const duration = (end - start);
