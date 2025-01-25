@@ -33,7 +33,16 @@ export function UserContextProvider({ children }) {
 
     // Display a loading message or error message based on state
     if (!ready) {
-        return <div>Loading...</div>; // Loading indicator
+        return (
+        <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+        <div className="w-12 h-12 border-4 border-gray-300 border-t-blue-500 rounded-full animate-spin"></div>
+        <p className="mt-4 text-center text-gray-600">
+          The site is loading...
+          <br />
+          Please wait a moment as the backend may take a few seconds to wake up due to the free-tier server.
+        </p>
+      </div>
+        )
     }
 
     if (error) {
