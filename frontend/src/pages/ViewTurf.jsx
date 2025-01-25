@@ -53,11 +53,11 @@ const ViewTurf = ({ turfs }) => {
         </div>
       </div>
 
-      <div className="bg-blue-400 -mx-8 px-8 py-8 border-t border-gray-200 rounded-b-2xl flex flex-col md:flex-row md:flex-wrap">
+      <div className="bg-secondary mx-8 px-8 py-8 border-t border-gray-200 rounded-b-2xl flex flex-col md:flex-row md:flex-wrap">
         <div className="sm:px-0 md:px-8 mr-2 w-full md:w-auto">
           <BookingWidget turf={turf} id="bookingWidget"/>
         </div>
-        <p className="text-gray-700 mt-6 leading-relaxed font-serif md:flex-1">{turf.desc}</p>
+        <p className="text-white font-medium mt-6 leading-relaxed font-sans md:flex-1">{turf.desc}</p>
       </div>
     </div>
   );

@@ -4,6 +4,7 @@ import Calendar from 'react-calendar';
 import 'react-calendar/dist/Calendar.css';
 import './BookingWidget.css';
 import { useNavigate } from "react-router-dom";
+import Popup from './PopupCard'; // Import Popup component
 
 const timeRanges = [
     'Late Night',
@@ -12,22 +13,28 @@ const timeRanges = [
     'Evening',
 ];
 
-
 const BookingWidget = ({ turf }) => {
     const navigate = useNavigate();
 
     const [date, setDate] = useState(new Date());
-    const [startTime, setStartTime] = useState(0); // Default start time
-    const [endTime, setEndTime] = useState(0); // Default end time
+    const [startTime, setStartTime] = useState(0);
+    const [endTime, setEndTime] = useState(0);
     const [amount, setAmount] = useState(0);
     const [unavailableSlots, setUnavailableSlots] = useState([]);
     const [showOverlay, setShowOverlay] = useState(false);
     const [currentSection, setCurrentSection] = useState(0);
     const [selectedSlots, setSelectedSlots] = useState([]);
+    const [showPopup, setShowPopup] = useState(false);
+    const [popupContent, setPopupContent] = useState({ 
+        title: '', 
+        message: '', 
+        onClose: () => setShowPopup(false) 
+    });
 
     const maxDate = new Date();
     maxDate.setMonth(maxDate.getMonth() + 1);
 
+    // Fetch unavailable slots based on the selected date
     useEffect(() => {
         const fetchUnavailableSlots = async () => {
             try {
@@ -43,6 +50,7 @@ const BookingWidget = ({ turf }) => {
         fetchUnavailableSlots();
     }, [date, showOverlay]);
 
+    // Update startTime, endTime, and amount when selected slots change
     useEffect(() => {
         if (selectedSlots.length > 0) {
             setStartTime(selectedSlots[0].start);
@@ -55,37 +63,49 @@ const BookingWidget = ({ turf }) => {
         const startDateTime = new Date(date);
         startDateTime.setHours(Math.floor(startTime));
         startDateTime.setMinutes((startTime % 1) * 60);
-        startDateTime.setSeconds(0);
-        startDateTime.setMilliseconds(0);
 
         const endDateTime = new Date(date);
         endDateTime.setHours(Math.floor(endTime));
         endDateTime.setMinutes((endTime % 1) * 60);
-        endDateTime.setSeconds(0);
-        endDateTime.setMilliseconds(0);
 
         try {
-            const response = await axios.post('/booking/new', {
+            await axios.post('/booking/new', {
                 turfId: turf._id,
                 startTime: startDateTime.toISOString(),
                 endTime: endDateTime.toISOString(),
                 amount
             });
-            
-            alert('Booking successful!');
-            setShowOverlay(false);
+
+            setPopupContent({
+                title: 'Success',
+                message: 'Booking successful!',
+                onClose: () => {
+                    setShowPopup(false);
+                    setShowOverlay(false);
+                }
+            });
+            setShowPopup(true);
         } catch (error) {
-            // Ensure error handling checks the actual error response
-            if (error.response && error.response.status === 401) {
-                alert("Please log in first");
-                navigate("/login");
+            if (error.response?.status === 401) {
+                setPopupContent({
+                    title: 'Login Required',
+                    message: 'Please log in first',
+                    onClose: () => {
+                        setShowPopup(false);
+                        navigate("/login");
+                    }
+                });
+                setShowPopup(true);
             } else {
-                console.error('Error creating booking:', error);
-                alert('Failed to book turf.');
+                setPopupContent({
+                    title: 'Error',
+                    message: 'Failed to book turf.',
+                    onClose: () => setShowPopup(false)
+                });
+                setShowPopup(true);
             }
         }
-    }
-        
+    };
 
     const calculateAmount = (start, end) => {
         const duration = (end - start);
@@ -94,32 +114,26 @@ const BookingWidget = ({ turf }) => {
 
     const markUnavailableSlots = (value) => {
         const now = new Date();
-        
-        // Open and close times as strings
         const openTime = turf.open;
         const closeTime = turf.close;
-    
-        // Convert open and close times to fractional hours
+
         const [openHour, openMinute] = openTime.split(":").map(Number);
         const [closeHour, closeMinute] = closeTime.split(":").map(Number);
         const openValue = openHour + openMinute / 60;
         const closeValue = closeHour + closeMinute / 60;
-    
-        // Check if the slot is in the past
+
         const isPast = date.toDateString() === now.toDateString() &&
                        value < now.getHours() + (now.getMinutes() / 60);
-    
-        // Check if the slot is outside open hours
+
         const isOutsideBusinessHours = value < openValue || value >= closeValue;
-    
-        // Check if the slot falls within any unavailable slots
+
         const isUnavailable = unavailableSlots.some(slot => 
             value >= slot.start && value < slot.end
         );
-    
+
         return isPast || isOutsideBusinessHours || isUnavailable;
     };
-    
+
     const generateTimeSlots = () => {
         const slots = [];
         for (let hour = 0; hour < 24; hour += 0.5) {
@@ -167,6 +181,15 @@ const BookingWidget = ({ turf }) => {
 
     return (
         <div className="relative booking-widget p-8 bg-white rounded shadow-md mx-auto ">
+            {/* Popup Component */}
+            {showPopup && (
+                <Popup
+                    title={popupContent.title}
+                    content={<p>{popupContent.message}</p>}
+                    onClose={popupContent.onClose}
+                />
+            )}
+
             <h2 className="text-blue-600 text-2xl font-semibold mb-4">Book a Turf</h2>
             <Calendar
                 className="calendar"
@@ -181,7 +204,9 @@ const BookingWidget = ({ turf }) => {
             <div className="flex flex-col text-black">
                 <p>Slot: {formatTime(startTime)} - {formatTime(endTime)}</p>
                 <p>Amount: ₹{amount}</p>
-                <button className="bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600" onClick={handleBooking}>Confirm Booking</button>
+                <button className="bg-blue-500 text-white py-2 mt-4 px-4 rounded hover:bg-blue-600 disabled:bg-gray-400" onClick={handleBooking} disabled={selectedSlots.length === 0}>
+                    Confirm Booking
+                </button>
             </div>
 
             {showOverlay && (
@@ -211,11 +236,7 @@ const BookingWidget = ({ turf }) => {
                                 </button>
                             ))}
                         </div>
-                        <button
-                            type="button"
-                            className="px-4 py-2 mt-1 justify-center flex m-auto border rounded bg-blue-950 text-white"
-                            onClick={() => setShowOverlay(false)}
-                        >
+                        <button type="button" className="px-4 py-2 mt-1 justify-center flex m-auto border rounded bg-blue-950 text-white" onClick={() => setShowOverlay(false)}>
                             Done
                         </button>
                     </div>

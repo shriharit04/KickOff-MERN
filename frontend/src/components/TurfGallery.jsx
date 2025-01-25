@@ -1,47 +1,52 @@
 import { useState } from "react";
 
-
 export default function TurfGallery({ turf }) {
   const [showAllPhotos, setShowAllPhotos] = useState(false);
 
   if (showAllPhotos) {
     return (
-      <div className="absolute inset-0 bg-black text-white min-h-screen bg-opacity-75 backdrop-blur-lg p-8 z-20">
-        <div className="mb-8">
-          <h2 className="text-3xl mb-4">Photos of {turf.name}</h2>
-          <button
-            onClick={() => setShowAllPhotos(false)}
-            className="fixed right-12 top-8 flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black"
-          >
-            <svg
-              xmlns="http://www.w3.org/2000/svg"
-              viewBox="0 0 24 24"
-              fill="currentColor"
-              className="w-6 h-6"
+      <div className="fixed inset-0 bg-black text-white min-h-screen bg-opacity-75 backdrop-blur-lg p-8 z-20 overflow-y-auto">
+        <div className="max-w-[60%] mx-auto">
+          <div className="mb-8 flex justify-between items-center sticky top-0 bg-black/80 py-4">
+            <h2 className="text-3xl">Photos of {turf.name}</h2>
+            <button
+              onClick={() => setShowAllPhotos(false)}
+              className="flex gap-1 py-2 px-4 rounded-2xl shadow shadow-black bg-white text-black"
             >
-              <path
-                fillRule="evenodd"
-                d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
-                clipRule="evenodd"
-              />
-            </svg>
-            Close photos
-          </button>
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 24 24"
+                fill="currentColor"
+                className="w-6 h-6"
+              >
+                <path
+                  fillRule="evenodd"
+                  d="M5.47 5.47a.75.75 0 011.06 0L12 10.94l5.47-5.47a.75.75 0 111.06 1.06L13.06 12l5.47 5.47a.75.75 0 11-1.06 1.06L12 13.06l-5.47 5.47a.75.75 0 01-1.06-1.06L10.94 12 5.47 6.53a.75.75 0 010-1.06z"
+                  clipRule="evenodd"
+                />
+              </svg>
+              Close photos
+            </button>
+          </div>
+          <div className="grid grid-cols-1 gap-4">
+            {turf?.photos?.length > 0 &&
+              turf.photos.map((photo, index) => (
+                <div key={index} className="w-full">
+                  <Image
+                    src={photo}
+                    alt=""
+                    className="w-full h-auto max-h-[80vh] object-contain mx-auto"
+                  />
+                </div>
+              ))}
+          </div>
         </div>
-        <div className="flex flex-wrap gap-4">
-          {turf?.photos?.length > 0 &&
-            turf.photos.map((photo, index) => (
-              <div key={index} className="flex-grow flex-shrink-0 basis-[calc(33.333%-1rem)] max-w-[calc(33.333%-1rem)] md:basis-[calc(50%-1rem)] md:max-w-[calc(50%-1rem)]">
-                <Image src={photo} alt="" className="w-full h-auto object-cover" />
-              </div>
-            ))}
-        </div>  
       </div>
     );
   }
 
   return (
-    <div className="relative">
+    <div className="relative w-[60%] mx-auto">
       <div className="flex gap-2 rounded-2xl overflow-hidden">
         <div className="flex-1">
           {turf.photos?.[0] && (

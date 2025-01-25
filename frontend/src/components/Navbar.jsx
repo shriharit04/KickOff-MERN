@@ -9,10 +9,10 @@ function Navbar() {
   const displayName = user ? user.name.slice(0, 10) : '';
 
   return (
-    <div className='flex mt-1 items-center justify-between bg-secondary text-white p-4 w-auto rounded-xl mb-4'>
+    <div className='flex items-center justify-between bg-secondary text-white p-3 sm:p-4 w-auto rounded-xl mb-4'>
       <Link to='/'>
         <div className='flex items-center '>
-          <svg className='h-9 sm:h-12' viewBox="0 0 2303 546" fill="none" xmlns="http://www.w3.org/2000/svg">
+          <svg className='h-4 md:h-9' viewBox="0 0 2303 546" fill="none" xmlns="http://www.w3.org/2000/svg">
             <path d="M9.00006 540.999C2.60006 540.999 -0.066611 538.066 1.00006 532.199L81.0001 25.7992C82.6001 19.9325 85.8001 16.9992 90.6001 16.9992H154.6C160.467 16.9992 162.867 19.9325 161.8 25.7992L141 158.599C138.333 176.199 135.4 194.066 132.2 212.199C129 230.333 125.267 248.733 121 267.399H122.6C132.2 248.733 142.067 230.599 152.2 212.999C162.333 194.866 172.733 176.999 183.4 159.399L267.4 25.7992C270.6 19.9325 274.6 16.9992 279.4 16.9992H352.2C354.867 16.9992 356.733 18.0659 357.8 20.1992C358.867 21.7992 358.6 23.6659 357 25.7992L220.2 242.599L287.4 532.199C288.467 538.066 285.8 540.999 279.4 540.999H210.6C205.8 540.999 202.867 538.066 201.8 532.199L154.6 310.599L105.8 381.799L81.0001 532.199C80.4667 538.066 77.5334 540.999 72.2001 540.999H9.00006Z" fill="#F7F7F7" />
             <path d="M329.313 540.999C322.913 540.999 320.246 538.066 321.313 532.199L401.313 25.7992C402.913 19.9325 406.113 16.9992 410.913 16.9992H474.913C480.779 16.9992 483.179 19.9325 482.113 25.7992L401.313 532.199C400.779 538.066 397.846 540.999 392.513 540.999H329.313Z" fill="#F7F7F7" />
             <path d="M610.55 545.799C563.617 545.799 529.217 531.133 507.35 501.799C485.483 471.933 479.083 427.933 488.15 369.799L519.35 173.799C528.417 118.333 545.75 77.5325 571.35 51.3992C596.95 25.2659 632.683 12.1992 678.55 12.1992C711.617 12.1992 738.283 19.9325 758.55 35.3992C779.35 50.8659 793.217 72.1992 800.15 99.3992C807.083 126.066 805.75 157.266 796.15 192.999C794.55 198.866 791.35 201.799 786.55 201.799H722.55C716.15 201.799 713.75 198.866 715.35 192.999C722.817 159.933 723.083 134.333 716.15 116.199C709.217 97.5325 694.017 88.1992 670.55 88.1992C650.283 88.1992 634.817 95.1325 624.15 108.999C613.483 122.333 605.483 144.733 600.15 176.199L568.15 372.999C563.35 406.599 564.95 431.133 572.95 446.599C580.95 462.066 596.15 469.799 618.55 469.799C642.017 469.799 659.083 460.199 669.75 440.999C680.417 421.799 686.817 396.466 688.95 364.999C689.483 359.133 692.417 356.199 697.75 356.199H761.75C764.417 356.199 766.55 356.733 768.15 357.799C769.75 358.866 770.283 361.266 769.75 364.999C767.083 421.533 752.417 465.799 725.75 497.799C699.617 529.799 661.217 545.799 610.55 545.799Z" fill="#F7F7F7" />
@@ -24,10 +24,28 @@ function Navbar() {
 
         </div>
       </Link>
-      <div className=''>
-        <Link to="/view/turfs" className='mr-8 hover:bg-gray-100 hover:text-secondary hover:underline p-2 border-stone-100 rounded-lg'>View Turfs</Link>
-        {!user && (<Link to="/login" className='mr-1 hover:bg-gray-100 hover:text-secondary hover:underline p-2 border-stone-100 rounded-lg'>Login</Link>)}
-        {user && (<Link to="/account/profile" className='mr-1 hover:bg-gray-100 hover:text-secondary hover:underline p-2 border-stone-100 rounded-lg'>{displayName}</Link>)}
+      <div className='flex items-center gap-4'>
+        <Link
+          to="/view/turfs"
+          className='hover:bg-gray-100 hover:text-secondary px-3 py-2 rounded-lg text-sm transition-all whitespace-nowrap'
+        >
+          View Turfs
+        </Link>
+        {!user ? (
+          <Link
+            to="/login"
+            className='hover:bg-gray-100 hover:text-secondary px-3 py-2 rounded-lg text-sm transition-all whitespace-nowrap'
+          >
+            Login
+          </Link>
+        ) : (
+          <Link
+            to="/account/profile"
+            className='hover:bg-gray-100 hover:text-secondary px-3 py-2 rounded-lg text-sm transition-all whitespace-nowrap flex-shrink-0'
+          >
+            {displayName}
+          </Link>
+        )}
       </div>
     </div>
   )

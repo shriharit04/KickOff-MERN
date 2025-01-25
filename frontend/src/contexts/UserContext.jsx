@@ -20,8 +20,9 @@ export function UserContextProvider({ children }) {
                 if (error.response && error.response.status === 401) {
                     navigate('/login'); // Redirect to login if unauthorized
                 } else {
-                    setError('Failed to fetch user profile.'); // Handle other errors
-                    console.error('Error fetching user profile:', error);
+                    // setError('Failed to fetch user profile.'); // Handle other errors
+                    // console.error('Error fetching user profile:', error);
+                    navigate('/login')
                 }
             } finally {
                 setReady(true); // Set ready to true regardless of success or failure

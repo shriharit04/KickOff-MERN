@@ -3,6 +3,7 @@ import React, { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import AccountNavbar from '../components/AccountNavbar';
 import { FaRegStar, FaStar } from 'react-icons/fa';
+import Popup from '../components/PopupCard';
 
 
 function MyTurf() {
@@ -26,6 +27,7 @@ function MyTurf() {
   const [size, setSize] = useState('');
 
   const [redirectToProfile, setRedirectToProfile] = useState('');
+  const [showPopup, setShowPopup] = useState(false)
 
   function uploadPhoto(ev) {
     const files = ev.target.files;
@@ -44,13 +46,13 @@ function MyTurf() {
   async function addNewTurf(ev) {
     ev.preventDefault();
     const { data } = await axios.post('/lister/turf/new', { name, address, desc, addedPhotos, price, open, close, size });
-    alert("New Turf added");
+    setShowPopup(true)
   }
 
   async function updateTurf(ev) {
     ev.preventDefault();
     const { data } = await axios.put(`/lister/turf/update/${turfExists}`, { name, address, desc, photos: addedPhotos, price, open, close, maxPlayers: size });
-    alert("Turf details updated");
+    setShowPopup(true)
   }
 
   function removePhoto(filename, ev) {
@@ -111,6 +113,20 @@ function MyTurf() {
       <div>
         <AccountNavbar activeClass={"myTurf"} />
         {/* <h1 className="text-center text-2xl font-bold my-4"></h1> */}
+
+        {showPopup && (
+        <Popup
+          title="Request Submitted"
+          content={
+            <div className="space-y-3">
+              <p>Request has been submitted. It will take a few days for us to review the details and list the turf.</p>
+              <p>During this time, we may reach out to you for additional information or clarification.</p>
+              <p>We kindly request your patience throughout this process.</p>
+            </div>
+          }
+          onClose={() => setShowPopup(false)}
+        />
+      )}
 
         {turfExists && !editable && (
           <button onClick={() => setEditable(!editable)} className='flex primary w-6xl m-auto p-8 primary mt-4'>
