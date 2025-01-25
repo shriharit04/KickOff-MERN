@@ -10,7 +10,7 @@ function AccountPage({activeClass}) {
   
 
   if(!ready){
-    return 'loading'
+    return 'Backend is spooling up.'
   }
 
   if(!user && ready && !redirect){

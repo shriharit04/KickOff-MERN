@@ -15,7 +15,7 @@ function AccountPage() {
   
 
   if(!ready){
-    return 'loading'
+    return 'backend is spooling up'
   }
 
   if(!user && ready && !redirect){
